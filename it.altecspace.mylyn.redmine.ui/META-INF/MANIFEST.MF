@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.trac.core;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.mylyn.commons.net;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.mylyn.commons.ui;bundle-version="[3.8.0,4.0.0)",
- org.eclipse.mylyn.commons.workbench;bundle-version="[3.8.0,4.0.0)"
+ org.eclipse.mylyn.commons.workbench;bundle-version="[3.8.0,4.0.0)",
+ it.altecspace.mylyn.redmine.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: it.altecspace.mylyn.redmine.ui
