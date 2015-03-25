@@ -1,6 +1,12 @@
 package it.altecspace.mylyn.redmine.ui;
 
+import it.altecspace.mylyn.redmine.client.IRedmineClientManager;
+import it.altecspace.mylyn.redmine.core.RedmineCorePlugin;
+import it.altecspace.mylyn.redmine.core.RedmineRepositoryConnector;
+
+import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.omg.CORBA.OMGVMCID;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -8,15 +14,10 @@ import org.osgi.framework.BundleContext;
  */
 public class RedmineUiPlugin extends AbstractUIPlugin
 {
-	// The plug-in ID
 	public static final String PLUGIN_ID = "it.altecspace.mylyn.redmine.ui"; //$NON-NLS-1$
 
-	// The shared instance
 	private static RedmineUiPlugin plugin;
 
-	/**
-	 * The constructor
-	 */
 	public RedmineUiPlugin()
 	{
 	}
@@ -28,16 +29,11 @@ public class RedmineUiPlugin extends AbstractUIPlugin
 	}
 
 	public void stop(BundleContext context) throws Exception
-	{
+	{	
 		plugin = null;
 		super.stop(context);
 	}
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
 	public static RedmineUiPlugin getDefault()
 	{
 		return plugin;

@@ -8,6 +8,7 @@ import org.eclipse.mylyn.tasks.core.ITaskMapping;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.AbstractRepositoryConnectorUi;
 import org.eclipse.mylyn.tasks.ui.wizards.ITaskRepositoryPage;
+import org.eclipse.mylyn.tasks.ui.wizards.RepositoryQueryWizard;
 
 public class RedmineRepositoryConnectorUI extends AbstractRepositoryConnectorUi
 {
@@ -26,8 +27,11 @@ public class RedmineRepositoryConnectorUI extends AbstractRepositoryConnectorUi
 	@Override
 	public IWizard getQueryWizard(TaskRepository repository, IRepositoryQuery query)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		RepositoryQueryWizard repositoryQueryWizard = new RepositoryQueryWizard(repository);
+		
+		repositoryQueryWizard.addPage(new RedmineTaskRepositoryQueryPage(repository, query));
+		
+		return repositoryQueryWizard; 
 	}
 
 	@Override
@@ -43,4 +47,6 @@ public class RedmineRepositoryConnectorUI extends AbstractRepositoryConnectorUi
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
 }

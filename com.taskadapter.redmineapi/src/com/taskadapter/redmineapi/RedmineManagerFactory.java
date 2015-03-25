@@ -3,22 +3,33 @@ package com.taskadapter.redmineapi;
 import com.taskadapter.redmineapi.internal.Transport;
 import com.taskadapter.redmineapi.internal.URIConfigurator;
 
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
@@ -324,4 +335,48 @@ public final class RedmineManagerFactory {
             }
         }
     }
+
+	public static RedmineManager createWithUserAuthNoSslCheck(String url, String username, String password)
+	{
+		SSLContext sslcontext = null;
+		try
+		{
+			sslcontext = SSLContexts.custom()
+						            .setSecureRandom(new SecureRandom())
+						            .loadTrustMaterial(null, new TrustStrategy() 
+						            {
+						                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException 
+						                {
+						                    return true;
+						                }
+						            }).build();
+		}
+		catch(Exception e)
+		{
+			
+		}
+		 
+		final CloseableHttpClient httpClient = HttpClients.custom()
+										   .setHostnameVerifier(new AllowAllHostnameVerifier())
+										   .setSslcontext(sslcontext)
+										   .build();
+		 
+		Runnable shutdownListener = new Runnable()
+		{	
+			@Override
+			public void run()
+			{
+				try
+				{
+					httpClient.close();
+				}
+				catch (IOException e)
+				{
+				
+				}	
+			}
+		};
+		
+		return createWithUserAuth(url, username, password, TransportConfiguration.create(httpClient, shutdownListener));
+	}
 }

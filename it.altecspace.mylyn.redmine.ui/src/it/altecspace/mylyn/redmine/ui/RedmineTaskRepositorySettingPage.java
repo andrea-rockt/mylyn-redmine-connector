@@ -2,6 +2,8 @@ package it.altecspace.mylyn.redmine.ui;
 
 import it.altecspace.mylyn.redmine.core.RedmineRepositoryConnectorConstants;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.wizards.AbstractRepositorySettingsPage;
 import org.eclipse.swt.widgets.Composite;
@@ -28,5 +30,5 @@ public class RedmineTaskRepositorySettingPage extends AbstractRepositorySettings
 	{
 
 	}
-
+	
 }
