@@ -10,14 +10,14 @@ public class Configuration implements Serializable
 {
 	private static final long serialVersionUID = -3367140793853904462L;
 	
-	List<CustomFieldDefinition> customFields = new ArrayList<CustomFieldDefinition>();
-	List<IssueCategory>         categories   = new ArrayList<IssueCategory>();
-	List<IssuePriority>         priorities   = new ArrayList<IssuePriority>();
-	List<IssueStatus>           statuses     = new ArrayList<IssueStatus>();
-	List<Project>               projects     = new ArrayList<Project>();
-	List<Tracker>               trackers     = new ArrayList<Tracker>();
-	List<User>                  users        = new ArrayList<User>();
-	List<Version>               versions     = new ArrayList<Version>();
+	private List<CustomFieldDefinition> customFields = new ArrayList<CustomFieldDefinition>();
+	private List<IssueCategory>         categories   = new ArrayList<IssueCategory>();
+	private List<IssuePriority>         priorities   = new ArrayList<IssuePriority>();
+	private List<IssueStatus>           statuses     = new ArrayList<IssueStatus>();
+	private List<Project>               projects     = new ArrayList<Project>();
+	private List<Tracker>               trackers     = new ArrayList<Tracker>();
+	private List<User>                  users        = new ArrayList<User>();
+	private List<Version>               versions     = new ArrayList<Version>();
 	
 	public List<CustomFieldDefinition> getCustomFields()
 	{

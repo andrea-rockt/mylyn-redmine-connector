@@ -13,9 +13,13 @@ public interface IRedmineClient
 	public List<Issue> getIssues() throws RedmineException;
 	
 	public List<Issue> getIssues(Project project) throws RedmineException;
+	
+	public Issue getIssueById(Integer id) throws RedmineException;
 
 	public List<Project> getProjects() throws RedmineException;
 
+	public Project getProjectByKey(String projectKey) throws RedmineException;
+	
 	public abstract void shutdown();
 
 	public abstract void connect() throws RedmineException;

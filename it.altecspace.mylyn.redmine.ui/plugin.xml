@@ -13,5 +13,12 @@
             overlayIcon="icons/eview16/redmine-overlay.gif">
       </connectorUi>
    </extension>
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.editors">
+      <pageFactory
+            class="it.altecspace.mylyn.redmine.ui.RedmineTaskEditorPageFactory"
+            id="it.altecspace.mylyn.redmine.ui.pageFactory">
+      </pageFactory>
+   </extension>
 
 </plugin>

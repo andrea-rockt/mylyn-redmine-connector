@@ -22,6 +22,7 @@ import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
 import org.eclipse.mylyn.tasks.core.data.TaskDataCollector;
+import org.eclipse.mylyn.tasks.core.data.TaskMapper;
 import org.eclipse.mylyn.tasks.core.sync.ISynchronizationSession;
 
 import com.taskadapter.redmineapi.RedmineException;
@@ -32,7 +33,7 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 {
 	private final IRedmineClientManager clientManager = new RedmineClientManager();
 
-	private final RedmineTaskDataHandler taskDataHandler = new RedmineTaskDataHandler();
+	private final RedmineTaskDataHandler taskDataHandler = new RedmineTaskDataHandler(this);
 	
 	public IRedmineClientManager getClientManager()
 	{
@@ -86,7 +87,20 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 			throws CoreException
 	{
 
-		return null;
+		try
+		{
+			IRedmineClient client = getClientManager().getClient(repository);
+			
+			Issue issue = client.getIssueById(Integer.parseInt(taskIdOrKey));
+			
+			
+			return taskDataHandler.createTaskDataFromIssue(repository, issue);
+			
+		}
+		catch (RedmineException e)
+		{
+			throw new CoreException(new RepositoryStatus(Status.ERROR, RedmineCorePlugin.PLUGIN_ID, RepositoryStatus.ERROR_NETWORK, "Error performing query.",e));
+		}
 	}
 
 	@Override
@@ -106,8 +120,23 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	@Override
 	public boolean hasTaskChanged(TaskRepository taskRepository, ITask task, TaskData taskData)
 	{
-
-		return false;
+		TaskMapper mapper = new RedmineTaskMapper(taskData);
+		
+		if (taskData.isPartial()) 
+		{
+			return mapper.hasChanges(task);
+		} 
+		else
+		{
+			java.util.Date repositoryDate = mapper.getModificationDate();
+			java.util.Date localDate = task.getModificationDate();
+			
+			if (repositoryDate != null && repositoryDate.equals(localDate))
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 
 	@Override
@@ -117,25 +146,31 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 		
 		TaskAttributeMapper mapper = taskDataHandler.getAttributeMapper(repository);
 		
+		monitor.beginTask("Performing query on repository.", 0);
+		
 		try
 		{
+	
 			IRedmineClient client = getClientManager().getClient(repository);
-			Project p = client.getProjects().get(0);
+			Project p = client.getProjectByKey("dpct_rms");
+			
 			List<Issue> issues = client.getIssues(p);
 			
 			for(Issue i :issues )
 			{
-				TaskData taskData = new TaskData(taskDataHandler.getAttributeMapper(repository),
-						RedmineRepositoryConnectorConstants.CONNECTOR_KIND, repository.getRepositoryUrl(), i.getId() + ""); 
+				if(monitor.isCanceled())
+				{
+					return new RepositoryStatus(Status.CANCEL, RedmineCorePlugin.PLUGIN_ID, RepositoryStatus.OK, "Error performing query.");
+				}
 				
-				taskData.setPartial(true);
-				
-				collector.accept(taskData);				
+				collector.accept(taskDataHandler.createTaskDataFromIssue(repository, i));				
 			}
+			
+			monitor.done();
 		}
 		catch (RedmineException e)
 		{
-			return new RepositoryStatus(RepositoryStatus.ERROR_NETWORK, RedmineCorePlugin.PLUGIN_ID, 0, "Error performing query.",e);
+			return new RepositoryStatus(Status.ERROR, RedmineCorePlugin.PLUGIN_ID, RepositoryStatus.ERROR_NETWORK, "Error performing query.",e);
 		}
 		
 		
@@ -147,13 +182,14 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	public void updateRepositoryConfiguration(TaskRepository taskRepository, IProgressMonitor monitor)
 			throws CoreException
 	{
-		
+		System.out.println("updating");
 	}
 
 	@Override
 	public void updateTaskFromTaskData(TaskRepository taskRepository, ITask task, TaskData taskData)
 	{
-
+		RedmineTaskMapper mapper = new RedmineTaskMapper(taskData);
+		mapper.applyTo(task);
 	}
 
 	@Override

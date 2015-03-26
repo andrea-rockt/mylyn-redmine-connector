@@ -21,6 +21,8 @@ public class RedmineClient implements IRedmineClient
 		this.configuration = configuration;
 				
 		manager = RedmineManagerFactory.createWithUserAuthNoSslCheck(url, username, password); 
+		
+		
 	}
 
 	@Override
@@ -34,6 +36,15 @@ public class RedmineClient implements IRedmineClient
 	public void connect() throws RedmineException
 	{
 		manager.getUserManager().getCurrentUser();
+		
+		if(configuration.isEmpty())
+		{
+			//configuration.getPriorities().addAll(manager.getIssueManager().getIssuePriorities());
+			configuration.getProjects().addAll(manager.getProjectManager().getProjects());
+			configuration.getStatuses().addAll(manager.getIssueManager().getStatuses());
+			configuration.getTrackers().addAll(manager.getIssueManager().getTrackers());
+			configuration.getUsers().addAll(manager.getUserManager().getUsers());
+		}
 	}
 	
 	@Override
@@ -62,6 +73,18 @@ public class RedmineClient implements IRedmineClient
 	public List<Issue> getIssues(Project project) throws RedmineException
 	{
 		return manager.getIssueManager().getIssues(project.getIdentifier(), null);
+	}
+
+	@Override
+	public Project getProjectByKey(String projectKey) throws RedmineException
+	{
+		return manager.getProjectManager().getProjectByKey(projectKey);
+	}
+
+	@Override
+	public Issue getIssueById(Integer id) throws RedmineException
+	{
+		return manager.getIssueManager().getIssueById(id);
 	}
 
 

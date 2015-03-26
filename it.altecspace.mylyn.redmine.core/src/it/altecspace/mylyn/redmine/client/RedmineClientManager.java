@@ -60,6 +60,8 @@ public class RedmineClientManager implements IRedmineClientManager
 	{
 		String url = repository.getUrl();
 		
+		
+		
 		AuthenticationCredentials credentials = repository.getCredentials(AuthenticationType.REPOSITORY);
 		
 		String username = credentials.getUserName();
