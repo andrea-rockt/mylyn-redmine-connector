@@ -13,33 +13,32 @@ import com.taskadapter.redmineapi.RedmineException;
 public class RedmineClientManager implements IRedmineClientManager
 {
 	
-	Map<String,IRedmineClient> clientsByUrl = new HashMap<String, IRedmineClient>();
+	Map<String,RedmineClient> clientsByUrl = new HashMap<String, RedmineClient>();
 
 	
 	@Override
 	public IRedmineClient getClient(TaskRepository repository) throws RedmineException
 	{
-		IRedmineClient client = clientsByUrl.get(repository.getUrl());
+		RedmineClient client = clientsByUrl.get(repository.getUrl());
 		
 		if(client == null)
 		{
 			client = createClientFromTaskRepository(repository);
+			client.loadConfiguration();
+			clientsByUrl.put(repository.getUrl(), client);
 		}
-		
-		
-		client.connect();
-		
+				
 		return client;
 	}
 	
 	@Override
-	public void validate(TaskRepository repository) throws RedmineException
+	public void validateConnection(TaskRepository repository) throws RedmineException
 	{	
-		IRedmineClient client = createClientFromTaskRepository(repository);
+		RedmineClient client = createClientFromTaskRepository(repository);
 		
 		try
 		{
-			client.connect();
+			client.validateConnection();
 		}
 		catch (RedmineException e)
 		{
@@ -51,16 +50,14 @@ public class RedmineClientManager implements IRedmineClientManager
 		}
 	}
 	
-	private IRedmineClient createClientFromTaskRepository(TaskRepository repository)
+	private RedmineClient createClientFromTaskRepository(TaskRepository repository)
 	{
-		return createClientFromTaskRepository(repository, new Configuration());
+		return createClientFromTaskRepository(repository, new CachedRepositoryConfiguration());
 	}
 	
-	private IRedmineClient createClientFromTaskRepository(TaskRepository repository, Configuration configuration)
+	private RedmineClient createClientFromTaskRepository(TaskRepository repository, CachedRepositoryConfiguration configuration)
 	{
-		String url = repository.getUrl();
-		
-		
+		String url = repository.getUrl();	
 		
 		AuthenticationCredentials credentials = repository.getCredentials(AuthenticationType.REPOSITORY);
 		

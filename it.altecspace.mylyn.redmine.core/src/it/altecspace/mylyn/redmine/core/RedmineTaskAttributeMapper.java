@@ -1,6 +1,6 @@
 package it.altecspace.mylyn.redmine.core;
 
-import it.altecspace.mylyn.redmine.client.Configuration;
+import it.altecspace.mylyn.redmine.client.CachedRepositoryConfiguration;
 import it.altecspace.mylyn.redmine.client.IRedmineClientManager;
 
 import java.util.Collections;
@@ -14,13 +14,14 @@ import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
 import com.taskadapter.redmineapi.bean.IssuePriority;
 import com.taskadapter.redmineapi.bean.IssueStatus;
 import com.taskadapter.redmineapi.bean.Project;
+import com.taskadapter.redmineapi.bean.User;
 import com.taskadapter.redmineapi.bean.Version;
 
 public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 {
-	private final Configuration configuration;
+	private final CachedRepositoryConfiguration configuration;
 
-	public RedmineTaskAttributeMapper(TaskRepository taskRepository, Configuration configuration)
+	public RedmineTaskAttributeMapper(TaskRepository taskRepository, CachedRepositoryConfiguration configuration)
 	{
 		super(taskRepository);
 		
@@ -31,7 +32,6 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 	@Override
 	public Map<String, String> getOptions(TaskAttribute attribute)
 	{
-
 		switch (RedmineAttribute.forKey(attribute.getId()))
 		{
 			case PROJECT:
@@ -41,7 +41,10 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 			case STATUS:
 				return getOptionsForStatus();
 			case VERSION:
-				return getOptionsForVersion();
+				return getOptionsForVersion(attribute.getParentAttribute());
+			case REPORTER:
+			case ASSIGNED_TO:
+				return getOptionsForUser();
 			default:
 				return super.getOptions(attribute);
 		}
@@ -49,6 +52,18 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 		
 	}
 	
+	private Map<String, String> getOptionsForUser()
+	{
+		Map<String,String> options = new HashMap<String, String>();
+		
+		for(User u : configuration.getUsers())
+		{
+			options.put(u.getLogin(), u.getLogin());
+		}
+		
+		return options;
+	}
+
 	private Map<String, String> getOptionsForStatus()
 	{
 		Map<String,String> options = new HashMap<String, String>();
@@ -61,13 +76,23 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 		return options;
 	}
 
-	private Map<String, String> getOptionsForVersion()
+	private Map<String, String> getOptionsForVersion(TaskAttribute rootAttribute)
 	{
-		Map<String,String> options = new HashMap<String, String>();
+		Map<String,String> options = new HashMap<String, String>();	
 		
-		for(Version v : configuration.getVersions())
+		String projectName = rootAttribute.getAttribute(RedmineAttribute.PROJECT.getKey()).getValue();
+		
+		for(Project p : configuration.getProjects())
 		{
-			options.put(v.getName(), v.getName());
+			if(p.getName().equals(projectName))
+			{
+				for(Version v: configuration.getProjectVersions(p))
+				{
+					options.put(v.getName(), v.getName());
+				}
+				
+				return options;
+			}
 		}
 		
 		return options;
@@ -75,14 +100,8 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 
 	private Map<String, String> getOptionsForPriority()
 	{
-		Map<String,String> options = new HashMap<String, String>();
 		
-		for(IssuePriority p : configuration.getPriorities())
-		{
-			options.put(p.getName(),p.getName());
-		}
-		
-		return options;
+		return Collections.<String,String>emptyMap();
 	}
 
 	private Map<String, String> getOptionsForProject()

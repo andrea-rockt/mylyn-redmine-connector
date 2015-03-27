@@ -35,7 +35,7 @@ public class UserManager {
      * @return the current user logged into Redmine
      */
     public User getCurrentUser() throws RedmineException {
-        return transport.getCurrentUser();
+        return transport.getCurrentUser(new BasicNameValuePair("include", "memberships"));
     }
 
     public User createUser(User user) throws RedmineException {
@@ -79,7 +79,7 @@ public class UserManager {
      */
     public List<User> getUsers() throws RedmineException {
         return transport.getObjectsList(User.class, new BasicNameValuePair(
-                "include", "memberships,groups"));
+                "include", "memberships"));
     }
 
     /**
@@ -87,7 +87,7 @@ public class UserManager {
      */
     public User getUserById(Integer userId) throws RedmineException {
         return transport.getObject(User.class, userId, new BasicNameValuePair(
-                "include", "memberships,groups"));
+                "include", "memberships"));
     }
 
     /**

@@ -1,50 +1,44 @@
 package it.altecspace.mylyn.redmine.client;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
 import com.taskadapter.redmineapi.bean.Issue;
+import com.taskadapter.redmineapi.bean.Membership;
 import com.taskadapter.redmineapi.bean.Project;
+import com.taskadapter.redmineapi.bean.User;
+import com.taskadapter.redmineapi.bean.Version;
 
 public class RedmineClient implements IRedmineClient
 {
 
 	final RedmineManager manager;
-	final Configuration  configuration;
+	final CachedRepositoryConfiguration  configuration;
 	
-	public RedmineClient(String url, String username, String password, Configuration configuration)
+	public RedmineClient(String url, String username, String password, CachedRepositoryConfiguration configuration)
 	{
 		this.configuration = configuration;
 				
 		manager = RedmineManagerFactory.createWithUserAuthNoSslCheck(url, username, password); 
-		
-		
+		manager.setObjectsPerPage(Integer.MAX_VALUE);
 	}
 
 	@Override
-	public Configuration getConfiguration()
+	public CachedRepositoryConfiguration getCachedRepositoryConfiguration()
 	{
 		return configuration;
 	}
 	
 	
-	@Override
-	public void connect() throws RedmineException
+	
+	public void validateConnection() throws RedmineException
 	{
-		manager.getUserManager().getCurrentUser();
-		
-		if(configuration.isEmpty())
-		{
-			//configuration.getPriorities().addAll(manager.getIssueManager().getIssuePriorities());
-			configuration.getProjects().addAll(manager.getProjectManager().getProjects());
-			configuration.getStatuses().addAll(manager.getIssueManager().getStatuses());
-			configuration.getTrackers().addAll(manager.getIssueManager().getTrackers());
-			configuration.getUsers().addAll(manager.getUserManager().getUsers());
-		}
+		//This line will trigger an exception if
+		//server is not reachable or if authentication
+		//cannot be performed due to wrong credentials
+		manager.getUserManager().getCurrentUser(); 
 	}
 	
 	@Override
@@ -53,38 +47,57 @@ public class RedmineClient implements IRedmineClient
 		manager.shutdown();
 	}
 
-	@Override
-	public List<Issue> getIssues() throws RedmineException
-	{
-		return manager.getIssueManager().getIssues(Collections.<String, String>emptyMap());
-	}
 
-	public List<Project> getProjects() throws RedmineException
+
+	public Iterable<Project> getProjects() throws RedmineException
 	{
-		if(configuration.getProjects().isEmpty())
-		{
-			configuration.getProjects().addAll(manager.getProjectManager().getProjects());
-		}
-		
 		return configuration.getProjects();
 	}
 
 	@Override
-	public List<Issue> getIssues(Project project) throws RedmineException
+	public Iterable<Issue> getIssuesByProject(Project project) throws RedmineException
 	{
-		return manager.getIssueManager().getIssues(project.getIdentifier(), null);
-	}
-
-	@Override
-	public Project getProjectByKey(String projectKey) throws RedmineException
-	{
-		return manager.getProjectManager().getProjectByKey(projectKey);
+		List<Issue> issues = manager.getIssueManager().getIssues(project.getIdentifier(),null);
+		
+		return issues;
 	}
 
 	@Override
 	public Issue getIssueById(Integer id) throws RedmineException
 	{
 		return manager.getIssueManager().getIssueById(id);
+	}
+
+	public void loadConfiguration() throws RedmineException
+	{
+		User u = manager.getUserManager().getCurrentUser();
+		
+		configuration.setCurrentUser(u);
+		
+		if(configuration.isEmpty())
+		{
+			for(Membership m : u.getMemberships())
+			{
+				Project p = manager.getProjectManager().getProjectById(m.getProject().getId());
+				
+				configuration.addProject(p);
+				
+				List<Version> versions = manager.getProjectManager().getVersions(m.getProject().getId());
+				
+				configuration.addVersionsToProject(p, versions);
+			}
+			
+			configuration.addStatuses(manager.getIssueManager().getStatuses());
+			configuration.addTrackers(manager.getIssueManager().getTrackers());
+			configuration.addUsers(manager.getUserManager().getUsers());		
+		}
+		
+	}
+
+	@Override
+	public User getCurrentUser()
+	{
+		return this.configuration.getCurrentUser();
 	}
 
 

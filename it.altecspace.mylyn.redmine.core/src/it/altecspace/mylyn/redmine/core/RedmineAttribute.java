@@ -14,7 +14,7 @@ public enum RedmineAttribute
 			 
 	REPORTER("Reporter",
 			  TaskAttribute.USER_REPORTER,
-			  TaskAttribute. TYPE_PERSON),
+			  TaskAttribute.TYPE_SINGLE_SELECT),
 			  
 	DESCRIPTION("Description",
 				  TaskAttribute.DESCRIPTION,
@@ -24,7 +24,7 @@ public enum RedmineAttribute
 				  
 	ASSIGNED_TO("Assigned to:",
 				  TaskAttribute.USER_ASSIGNED,
-				  TaskAttribute.TYPE_PERSON),
+				  TaskAttribute.TYPE_SINGLE_SELECT),
 				  
 	DATE_SUBMITTED ("Submitted",
                      TaskAttribute.DATE_CREATION,

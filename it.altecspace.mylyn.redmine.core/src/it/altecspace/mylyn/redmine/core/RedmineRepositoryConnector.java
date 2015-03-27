@@ -94,7 +94,7 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 			Issue issue = client.getIssueById(Integer.parseInt(taskIdOrKey));
 			
 			
-			return taskDataHandler.createTaskDataFromIssue(repository, issue);
+			return taskDataHandler.createTaskDataFromIssue(repository, issue, client.getCachedRepositoryConfiguration());
 			
 		}
 		catch (RedmineException e)
@@ -146,24 +146,39 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 		
 		TaskAttributeMapper mapper = taskDataHandler.getAttributeMapper(repository);
 		
+		
+		
 		monitor.beginTask("Performing query on repository.", 0);
 		
 		try
 		{
 	
 			IRedmineClient client = getClientManager().getClient(repository);
-			Project p = client.getProjectByKey("dpct_rms");
 			
-			List<Issue> issues = client.getIssues(p);
-			
-			for(Issue i :issues )
+			for(Project p : client.getCachedRepositoryConfiguration().getProjects())
 			{
-				if(monitor.isCanceled())
-				{
-					return new RepositoryStatus(Status.CANCEL, RedmineCorePlugin.PLUGIN_ID, RepositoryStatus.OK, "Error performing query.");
-				}
 				
-				collector.accept(taskDataHandler.createTaskDataFromIssue(repository, i));				
+				for(Issue i : client.getIssuesByProject(p))
+				{
+					
+					boolean createdByMe = i.getAuthor().getId().equals(client.getCurrentUser().getId());
+					//The && operator is short circuiting, if assignee is null the subsequent expression will not be evaluated
+					boolean assignedToMe = i.getAssignee() != null  && i.getAssignee().getId().equals(client.getCurrentUser().getId());
+					
+					
+					if(!(createdByMe||assignedToMe))
+					{
+						continue;
+					}
+						
+					
+					if(monitor.isCanceled())
+					{
+						return new RepositoryStatus(Status.CANCEL, RedmineCorePlugin.PLUGIN_ID, RepositoryStatus.OK, "Error performing query.");
+					}
+					
+					collector.accept(taskDataHandler.createTaskDataFromIssue(repository, i, client.getCachedRepositoryConfiguration()));				
+				}
 			}
 			
 			monitor.done();
@@ -199,7 +214,7 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 		
 		try
 		{
-			clientManager.validate(repository);
+			clientManager.validateConnection(repository);
 		}
 		catch (RedmineException e)
 		{

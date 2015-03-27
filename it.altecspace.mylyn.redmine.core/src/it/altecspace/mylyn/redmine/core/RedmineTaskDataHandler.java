@@ -1,5 +1,6 @@
 package it.altecspace.mylyn.redmine.core;
 
+import it.altecspace.mylyn.redmine.client.CachedRepositoryConfiguration;
 import it.altecspace.mylyn.redmine.client.IRedmineClientManager;
 
 import java.util.Set;
@@ -52,7 +53,7 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 	{
 		try
 		{
-			return new RedmineTaskAttributeMapper(repository, connector.getClientManager().getClient(repository).getConfiguration());
+			return new RedmineTaskAttributeMapper(repository, connector.getClientManager().getClient(repository).getCachedRepositoryConfiguration());
 		}
 		catch (RedmineException e)
 		{
@@ -61,15 +62,28 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 	}
 	
 	
-	public TaskData createTaskDataFromIssue(TaskRepository repository, Issue issue )
+	public TaskData createTaskDataFromIssue(TaskRepository repository, Issue issue, CachedRepositoryConfiguration configuration )
 	{
 		TaskData taskData = new TaskData(getAttributeMapper(repository), RedmineRepositoryConnectorConstants.CONNECTOR_KIND, repository.getRepositoryUrl(), issue.getId().toString());
+		
+		addMissingInformationsToIssueFromCachedConfiguration(issue, configuration);
 		
 		createAttributes(taskData);
 		
 		updateTaskDataFromIssue(repository,taskData,issue);
 		
 		return taskData;
+	}
+
+	private void addMissingInformationsToIssueFromCachedConfiguration(Issue issue,
+			CachedRepositoryConfiguration configuration)
+	{
+		//Data transfer object members of issue are not populated with all the info,
+		//we should hit the server to retrieve missing fields but instead we hit our
+		//local cache.
+		issue.setProject(configuration.getProjectById(issue.getProject().getId()));
+		issue.setAssignee(configuration.getUserById(issue.getAssignee().getId()));
+		issue.setAuthor(configuration.getUserById(issue.getAuthor().getId()));
 	}
 
 	private void createAttributes(TaskData taskData)
@@ -133,15 +147,31 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		mapper.setDateValue(dateUpdated, issue.getUpdatedOn());
 		mapper.setDateValue(dateDue, issue.getDueDate());
 		mapper.setValue(project, issue.getProject().getName());
-//		mapper.setValue(priority, issue.getPriorityText());
-//		mapper.setValue(version, issue.getTargetVersion().getName());
-//		mapper.setValue(status, issue.getStatusName());
+		mapper.setValue(priority, issue.getPriorityText());
+		
+		if(issue.getTargetVersion()!=null)
+		{
+			mapper.setValue(version, issue.getTargetVersion().getName());	
+		}
+		
+		mapper.setValue(status, issue.getStatusName());
 	}
 	
 	private IRepositoryPerson createPersonFromUser(TaskRepository repository, User user)
 	{
-		IRepositoryPerson person   = repository.createPerson(user.getId().toString());
-		person.setName(user.getFullName());
+		IRepositoryPerson person =null;
+				
+		if(user == null)
+		{
+			person = repository.createPerson("unassigned");
+			person.setName("Unassigned");
+		}
+		else
+		{
+			person = repository.createPerson(user.getLogin().toString());
+			person.setName(user.getFullName());
+		}
+		 
 		return person;
 		
 	}

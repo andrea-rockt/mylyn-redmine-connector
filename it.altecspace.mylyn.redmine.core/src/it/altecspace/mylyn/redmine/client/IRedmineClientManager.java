@@ -10,5 +10,5 @@ public interface IRedmineClientManager
 {	
 	public IRedmineClient getClient(TaskRepository repository) throws RedmineException;
 
-	public void validate(TaskRepository repository) throws RedmineException;
+	public void validateConnection(TaskRepository repository) throws RedmineException;
 }

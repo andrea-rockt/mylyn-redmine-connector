@@ -27,6 +27,8 @@ import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.Header;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -35,6 +37,9 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpProcessor;
+import org.apache.http.protocol.HttpProcessorBuilder;
+import org.eclipse.osgi.framework.util.Headers;
 
 import com.taskadapter.redmineapi.internal.comm.ConnectionEvictor;
 import com.taskadapter.redmineapi.internal.comm.naivessl.NaiveSSLFactory;
@@ -356,11 +361,16 @@ public final class RedmineManagerFactory {
 			
 		}
 		 
+		
+		
 		final CloseableHttpClient httpClient = HttpClients.custom()
 										   .setHostnameVerifier(new AllowAllHostnameVerifier())
 										   .setSslcontext(sslcontext)
+										   .setMaxConnTotal(Integer.MAX_VALUE)
+										   .setMaxConnPerRoute(Integer.MAX_VALUE)
 										   .build();
 		 
+		
 		Runnable shutdownListener = new Runnable()
 		{	
 			@Override

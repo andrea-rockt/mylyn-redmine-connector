@@ -1,26 +1,23 @@
 package it.altecspace.mylyn.redmine.client;
 
-import java.util.List;
-
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.Project;
+import com.taskadapter.redmineapi.bean.User;
 
 public interface IRedmineClient
 {
-	public Configuration getConfiguration();
+	public User getCurrentUser();
+	
+	public CachedRepositoryConfiguration getCachedRepositoryConfiguration();
 
-	public List<Issue> getIssues() throws RedmineException;
-	
-	public List<Issue> getIssues(Project project) throws RedmineException;
-	
+	public Iterable<Issue> getIssuesByProject(Project project) throws RedmineException;
+//	
 	public Issue getIssueById(Integer id) throws RedmineException;
-
-	public List<Project> getProjects() throws RedmineException;
-
-	public Project getProjectByKey(String projectKey) throws RedmineException;
+//
+//	public List<Project> getProjects() throws RedmineException;
+//
+//	public Project getProjectByKey(String projectKey) throws RedmineException;
 	
 	public abstract void shutdown();
-
-	public abstract void connect() throws RedmineException;
 }
