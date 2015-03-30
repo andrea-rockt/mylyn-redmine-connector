@@ -33,7 +33,14 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 	@Override
 	public Map<String, String> getOptions(TaskAttribute attribute)
 	{
-		switch (RedmineAttribute.forKey(attribute.getId()))
+		RedmineAttribute redmineAttribute = RedmineAttribute.forKey(attribute.getId());
+		
+		if(redmineAttribute==null)
+		{
+			return super.getOptions(attribute);
+		}
+		
+		switch (redmineAttribute)
 		{
 			case PROJECT:
 				return getOptionsForProject();

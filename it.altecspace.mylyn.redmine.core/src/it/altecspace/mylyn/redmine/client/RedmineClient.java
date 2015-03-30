@@ -77,7 +77,7 @@ public class RedmineClient implements IRedmineClient
 	@Override
 	public Issue getIssueById(Integer id) throws RedmineException
 	{
-		return manager.getIssueManager().getIssueById(id,Include.journals);
+		return manager.getIssueManager().getIssueById(id,Include.journals,Include.attachments);
 	}
 
 	public void loadConfiguration() throws RedmineException

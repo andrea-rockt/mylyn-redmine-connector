@@ -1,7 +1,6 @@
 package it.altecspace.mylyn.redmine.core;
 
 import it.altecspace.mylyn.redmine.client.CachedRepositoryConfiguration;
-import it.altecspace.mylyn.redmine.client.IRedmineClientManager;
 
 import java.util.Set;
 
@@ -13,12 +12,14 @@ import org.eclipse.mylyn.tasks.core.ITaskMapping;
 import org.eclipse.mylyn.tasks.core.RepositoryResponse;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
+import org.eclipse.mylyn.tasks.core.data.TaskAttachmentMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskCommentMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
 
 import com.taskadapter.redmineapi.RedmineException;
+import com.taskadapter.redmineapi.bean.Attachment;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.Journal;
 import com.taskadapter.redmineapi.bean.User;
@@ -31,7 +32,6 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 	public RedmineTaskDataHandler(RedmineRepositoryConnector connector)
 	{
 		this.connector = connector;
-		
 	}
 	
 	@Override
@@ -167,7 +167,7 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		
 		mapper.setValue(status, issue.getStatusName());
 		
-		int count =1;
+		int journalCount =1;
 		
 		for(Journal j : issue.getJournals())
 		{
@@ -177,18 +177,46 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 			}
 			
 			
-			TaskAttribute comment = taskData.getRoot().createAttribute(TaskAttribute.PREFIX_COMMENT + count);
+			TaskAttribute comment = taskData.getRoot().createAttribute(TaskAttribute.PREFIX_COMMENT + journalCount);
 			
 			TaskCommentMapper commentMapper =  new TaskCommentMapper();
 			
 			commentMapper.setAuthor(repository.createPerson(j.getUser().getLogin()));
 			commentMapper.setCreationDate(j.getCreatedOn());
 			commentMapper.setText(j.getNotes());
-			commentMapper.setNumber(count);
+			commentMapper.setNumber(journalCount);
 			
 			commentMapper.applyTo(comment);
 			
-			count++;
+			journalCount++;
+		}
+		
+		
+		int attachmentCount =1;
+		for(Attachment a: issue.getAttachments())
+		{
+			TaskAttachmentMapper attachmentMapper = new TaskAttachmentMapper();
+			
+			attachmentMapper.setAuthor(repository.createPerson("attachment"));
+			
+			attachmentMapper.setDescription(a.getDescription());
+			
+			attachmentMapper.setFileName(a.getFileName());
+			
+			attachmentMapper.setLength((long) a.getFileSize());
+			
+			attachmentMapper.setCreationDate(a.getCreatedOn());
+			
+			attachmentMapper.setUrl(a.getContentURL());
+			
+			
+			attachmentMapper.setAttachmentId(Integer.toString(attachmentCount)); //$NON-NLS-1$
+
+			TaskAttribute attribute = taskData.getRoot().createAttribute(TaskAttribute.PREFIX_ATTACHMENT + (attachmentCount));
+			
+			attachmentMapper.applyTo(attribute);
+			
+			attachmentCount++;
 		}
 	
 	}

@@ -17,6 +17,7 @@ import org.eclipse.mylyn.tasks.core.RepositoryInfo;
 import org.eclipse.mylyn.tasks.core.RepositoryStatus;
 import org.eclipse.mylyn.tasks.core.RepositoryVersion;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
+import org.eclipse.mylyn.tasks.core.data.AbstractTaskAttachmentHandler;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
@@ -39,6 +40,13 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	public IRedmineClientManager getClientManager()
 	{
 		return clientManager;
+	}
+
+
+	@Override
+	public AbstractTaskAttachmentHandler getTaskAttachmentHandler()
+	{
+		return new RedmineTaskAttachmentHandler();
 	}
 
 
