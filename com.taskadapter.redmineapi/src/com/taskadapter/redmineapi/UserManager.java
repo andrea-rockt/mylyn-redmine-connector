@@ -78,7 +78,7 @@ public class UserManager {
      * @throws RedmineException
      */
     public List<User> getUsers() throws RedmineException {
-        return transport.getObjectsList(User.class, new BasicNameValuePair(
+        return transport.getObjectsList(User.class,new BasicNameValuePair("status", ""), new BasicNameValuePair(
                 "include", "memberships"));
     }
 

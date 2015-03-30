@@ -1,7 +1,9 @@
 package it.altecspace.mylyn.redmine.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.taskadapter.redmineapi.Include;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
@@ -57,7 +59,17 @@ public class RedmineClient implements IRedmineClient
 	@Override
 	public Iterable<Issue> getIssuesByProject(Project project) throws RedmineException
 	{
-		List<Issue> issues = manager.getIssueManager().getIssues(project.getIdentifier(),null);
+		List<Issue> issues = manager.getIssueManager().getIssues(project.getIdentifier(),null,Include.journals);
+		
+//		List<Issue> issuesWithJournals = new ArrayList<Issue>();
+//		
+//		for(Issue i : issues)
+//		{
+//			Issue issueWithJournals = manager.getIssueManager().getIssueById(i.getId(), Include.journals);
+//			issuesWithJournals.add(issueWithJournals);
+//		}
+//		
+//		return issuesWithJournals;
 		
 		return issues;
 	}
@@ -65,7 +77,7 @@ public class RedmineClient implements IRedmineClient
 	@Override
 	public Issue getIssueById(Integer id) throws RedmineException
 	{
-		return manager.getIssueManager().getIssueById(id);
+		return manager.getIssueManager().getIssueById(id,Include.journals);
 	}
 
 	public void loadConfiguration() throws RedmineException

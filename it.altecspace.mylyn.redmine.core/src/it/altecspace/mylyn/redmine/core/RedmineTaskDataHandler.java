@@ -15,10 +15,12 @@ import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
+import org.eclipse.mylyn.tasks.core.data.TaskCommentMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
 
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.Issue;
+import com.taskadapter.redmineapi.bean.Journal;
 import com.taskadapter.redmineapi.bean.User;
 
 public class RedmineTaskDataHandler extends AbstractTaskDataHandler
@@ -85,6 +87,11 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		issue.setProject(configuration.getProjectById(issue.getProject().getId()));
 		issue.setAssignee(configuration.getUserById(issue.getAssignee().getId()));
 		issue.setAuthor(configuration.getUserById(issue.getAuthor().getId()));
+		
+		for(Journal j : issue.getJournals())
+		{
+			j.setUser(configuration.getUserById(j.getUser().getId()));
+		}
 	}
 
 	private void createAttributes(TaskData taskData)
@@ -159,6 +166,31 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		}
 		
 		mapper.setValue(status, issue.getStatusName());
+		
+		int count =1;
+		
+		for(Journal j : issue.getJournals())
+		{
+			if(j.getNotes()==null || j.getNotes().length()==0)
+			{
+				continue;
+			}
+			
+			
+			TaskAttribute comment = taskData.getRoot().createAttribute(TaskAttribute.PREFIX_COMMENT + count);
+			
+			TaskCommentMapper commentMapper =  new TaskCommentMapper();
+			
+			commentMapper.setAuthor(repository.createPerson(j.getUser().getLogin()));
+			commentMapper.setCreationDate(j.getCreatedOn());
+			commentMapper.setText(j.getNotes());
+			commentMapper.setNumber(count);
+			
+			commentMapper.applyTo(comment);
+			
+			count++;
+		}
+	
 	}
 	
 	private PriorityLevel translatePriorityTextToPriorityLevel(String priorityText)

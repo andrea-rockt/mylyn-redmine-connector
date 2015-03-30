@@ -25,6 +25,7 @@ import org.eclipse.mylyn.tasks.core.data.TaskDataCollector;
 import org.eclipse.mylyn.tasks.core.data.TaskMapper;
 import org.eclipse.mylyn.tasks.core.sync.ISynchronizationSession;
 
+import com.taskadapter.redmineapi.Include;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.Project;
@@ -177,7 +178,9 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 						return new RepositoryStatus(Status.CANCEL, RedmineCorePlugin.PLUGIN_ID, RepositoryStatus.OK, "Error performing query.");
 					}
 					
-					collector.accept(taskDataHandler.createTaskDataFromIssue(repository, i, client.getCachedRepositoryConfiguration()));				
+					TaskData t = taskDataHandler.createTaskDataFromIssue(repository, i, client.getCachedRepositoryConfiguration());
+					t.setPartial(true);
+					collector.accept(t);				
 				}
 			}
 			
@@ -203,6 +206,8 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	@Override
 	public void updateTaskFromTaskData(TaskRepository taskRepository, ITask task, TaskData taskData)
 	{
+
+		
 		RedmineTaskMapper mapper = new RedmineTaskMapper(taskData);
 		mapper.applyTo(task);
 	}

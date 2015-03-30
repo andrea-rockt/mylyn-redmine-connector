@@ -11,7 +11,7 @@ public enum RedmineAttribute
 			 TaskAttribute.SUMMARY,
 			 TaskAttribute.TYPE_SHORT_TEXT,
 			 Flag.REQUIRED),
-			 
+	
 	REPORTER("Reporter",
 			  TaskAttribute.USER_REPORTER,
 			  TaskAttribute.TYPE_SINGLE_SELECT),
