@@ -5,7 +5,7 @@ package com.taskadapter.redmineapi.bean;
  */
 public class Watcher {
 
-    private final Integer id;
+    private Integer id;
     private String name;
 
     /**
@@ -13,10 +13,13 @@ public class Watcher {
      *
      * @param id database Id
      */
-    Watcher(Integer id) {
+    public Watcher(Integer id) {
         this.id = id;
     }
 
+    public Watcher() {
+    }
+    
     public Integer getId() {
         return id;
     }

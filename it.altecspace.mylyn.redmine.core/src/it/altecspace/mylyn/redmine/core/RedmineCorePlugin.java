@@ -1,11 +1,11 @@
 package it.altecspace.mylyn.redmine.core;
 
-import it.altecspace.mylyn.redmine.client.RedmineClientManager;
-
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class RedmineCorePlugin implements BundleActivator
+public class RedmineCorePlugin extends Plugin
 {
 	public static final String PLUGIN_ID = "it.altecspace.mylyn.redmine.core"; //$NON-NLS-1$
 
@@ -19,6 +19,12 @@ public class RedmineCorePlugin implements BundleActivator
 		return instance;
 	}
 
+	public IPath getStatePath() 
+	{
+		IPath stateLocation = Platform.getStateLocation(getBundle());
+		
+		return stateLocation;
+	}
 	
 	static BundleContext getContext()
 	{

@@ -18,7 +18,7 @@ public class User implements Identifiable {
     /**
      * database ID.
      */
-    private final Integer id;
+    private  Integer id;
 
     private String login;
     private String password;
@@ -42,10 +42,15 @@ public class User implements Identifiable {
      *
      * @see UserFactory
      */
-    User(Integer id) {
+    public User(Integer id) {
         this.id = id;
     }
 
+    public User()
+    {
+    
+    }
+    
     @Override
     public Integer getId() {
         return id;

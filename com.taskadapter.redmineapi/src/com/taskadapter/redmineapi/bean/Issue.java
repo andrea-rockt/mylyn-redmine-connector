@@ -14,7 +14,7 @@ public class Issue implements Identifiable {
     /**
      * database ID.
      */
-    private final Integer id;
+    private  Integer id;
 
     private String subject;
     private Integer parentId;
@@ -53,10 +53,11 @@ public class Issue implements Identifiable {
     private final Set<Changeset> changesets = new HashSet<Changeset>();
     private final Set<Watcher> watchers = new HashSet<Watcher>();
 
+       
     /**
      * @param id database ID.
      */
-    Issue(Integer id) {
+    public Issue(Integer id) {
         this.id = id;
     }
 

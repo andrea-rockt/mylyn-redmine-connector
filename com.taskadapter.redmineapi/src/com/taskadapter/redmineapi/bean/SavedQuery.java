@@ -1,7 +1,7 @@
 package com.taskadapter.redmineapi.bean;
 
 public class SavedQuery {
-    private final Integer id;
+    private Integer id;
 
     private String name;
     private boolean publicQuery;
@@ -10,10 +10,13 @@ public class SavedQuery {
     /**
      * @param id database Id
      */
-    SavedQuery(Integer id) {
+    public SavedQuery(Integer id) {
         this.id = id;
     }
 
+    public SavedQuery() {
+        
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

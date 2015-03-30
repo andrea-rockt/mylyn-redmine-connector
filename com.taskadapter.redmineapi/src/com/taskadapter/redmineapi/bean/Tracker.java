@@ -10,7 +10,7 @@ public class Tracker implements Identifiable, Serializable {
     /**
      * database ID.
      */
-    private final Integer id;
+    private Integer id;
 
     private String name;
 
@@ -21,8 +21,12 @@ public class Tracker implements Identifiable, Serializable {
      *
      * @see com.taskadapter.redmineapi.bean.TrackerFactory
      */
-    Tracker(Integer id) {
+    public Tracker(Integer id) {
         this.id = id;
+    }
+    
+    public Tracker() {
+        
     }
 
     public Integer getId() {

@@ -12,7 +12,7 @@ public class Membership implements Identifiable {
     /**
      * database ID.
      */
-    private final Integer id;
+    private  Integer id;
 
 	private Project project;
 
@@ -32,10 +32,13 @@ public class Membership implements Identifiable {
      *
      * @see com.taskadapter.redmineapi.bean.MembershipFactory
      */
-    Membership(Integer id) {
+    public Membership(Integer id) {
         this.id = id;
     }
 
+    public Membership() {
+        
+    }
     @Override
 	public Integer getId() {
 		return id;

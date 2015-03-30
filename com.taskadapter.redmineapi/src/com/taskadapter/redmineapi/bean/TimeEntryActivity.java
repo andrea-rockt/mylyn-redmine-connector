@@ -5,7 +5,7 @@ public class TimeEntryActivity {
     /**
      * @param id database Id
      */
-    private final Integer id;
+    private Integer id;
 
     private String name;
     private boolean isDefault;
@@ -13,7 +13,14 @@ public class TimeEntryActivity {
     /**
      * @param id database Id
      */
-    TimeEntryActivity(Integer id) {
+    public TimeEntryActivity() {
+        
+    }
+    
+    /**
+     * @param id database Id
+     */
+    public TimeEntryActivity(Integer id) {
         this.id = id;
     }
 

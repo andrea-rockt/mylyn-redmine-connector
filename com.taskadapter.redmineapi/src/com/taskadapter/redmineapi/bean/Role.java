@@ -12,7 +12,7 @@ public class Role {
     /**
      * database ID.
      */
-    private final Integer id;
+    private Integer id;
 
 	private String name;
 	private Boolean inherited;
@@ -26,10 +26,13 @@ public class Role {
      *
      * @see com.taskadapter.redmineapi.bean.RoleFactory
      */
-    Role(Integer id) {
+    public Role(Integer id) {
         this.id = id;
     }
 
+    public Role() {
+        
+    }
     public Integer getId() {
 		return id;
 	}

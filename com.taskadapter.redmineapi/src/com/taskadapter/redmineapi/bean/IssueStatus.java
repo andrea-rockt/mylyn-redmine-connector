@@ -8,13 +8,18 @@ import java.io.Serializable;
 public class IssueStatus implements Identifiable, Serializable {
 	private static final long serialVersionUID = -2221390098554222099L;
 
-	private final Integer id;
+	private Integer id;
 
     private String name;
     private boolean defaultStatus = false;
     private boolean closed = false;
 
-    IssueStatus(Integer id) {
+    
+    public IssueStatus()
+    {
+    }
+    
+    public IssueStatus(Integer id) {
         this.id = id;
     }
 

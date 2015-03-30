@@ -16,8 +16,12 @@ public class IssuePriority {
      *
      * @see com.taskadapter.redmineapi.bean.IssuePriorityFactory
      */
-    IssuePriority(Integer id) {
+    public IssuePriority(Integer id) {
         this.id = id;
+    }
+    
+    public IssuePriority() {
+        this.id = null;
     }
 
     public Integer getId() {

@@ -19,14 +19,19 @@ public class IssueRelation implements Identifiable {
      </relation>
      */
 
-    private final Integer id;
+    private  Integer id;
     private Integer issueId;
     private Integer issueToId;
     private String type;
     private Integer delay;
 
-    IssueRelation(Integer id) {
+    public IssueRelation(Integer id) {
         this.id = id;
+    }
+    
+    public IssueRelation()
+    {
+        this.id = null;
     }
 
     public Integer getId() {

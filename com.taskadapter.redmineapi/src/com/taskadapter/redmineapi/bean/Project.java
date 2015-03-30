@@ -15,7 +15,7 @@ public class Project implements Identifiable, Serializable {
 	/**
 	 * database ID
 	 */
-    private final Integer id;
+    private  Integer id;
 
     /**
      * String "identifier" (human-readable name without spaces and other extra stuff)
@@ -48,10 +48,14 @@ public class Project implements Identifiable, Serializable {
      */
     private final Collection<Tracker> trackers = new HashSet<Tracker>();
 
-    Project(Integer id) {
+    public Project(Integer id) {
         this.id = id;
     }
 
+    public Project() {
+    
+    }
+    
     public String getHomepage() {
         return homepage;
     }

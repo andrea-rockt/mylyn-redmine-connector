@@ -3,7 +3,7 @@ package com.taskadapter.redmineapi.bean;
 
 public class Group implements Identifiable {
 	
-    private final Integer id;
+    private Integer id;
     private String name;
 
     /**
@@ -11,8 +11,12 @@ public class Group implements Identifiable {
      *
      * @param id database ID.
      */
-    Group(Integer id) {
+    public Group(Integer id) {
         this.id = id;
+    }
+    
+    public Group() {
+    
     }
 
     public Integer getId() {

@@ -29,7 +29,7 @@ public class Version implements Identifiable {
     public static final String SHARING_TREE = "tree";
     public static final String SHARING_SYSTEM = "system";
 
-    private final Integer id;
+    private  Integer id;
     private Project project;
     private String name;
     private String description;
@@ -45,8 +45,12 @@ public class Version implements Identifiable {
      * Use VersionFactory to create an instance of this class.
      * @see com.taskadapter.redmineapi.bean.VersionFactory
      */
-    Version(Integer id) {
+    public Version(Integer id) {
         this.id = id;
+    }
+    
+    public Version() {
+        
     }
 
     /**

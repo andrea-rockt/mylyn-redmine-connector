@@ -10,20 +10,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.taskadapter.redmineapi.bean.*;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CachedRepositoryConfiguration implements Serializable
 {
 	private static final long serialVersionUID = -3367140793853904462L;
 	
+	@XmlElementWrapper(name="custom-fields")
+	@XmlElement(name="custom-field")
 	private List<CustomFieldDefinition> customFields        = new ArrayList<CustomFieldDefinition>();
+	@XmlElementWrapper(name="categories")
+	@XmlElement(name="category")
 	private List<IssueCategory>         categories          = new ArrayList<IssueCategory>();
+	@XmlElementWrapper(name="priorities")
+	@XmlElement(name="priority")
 	private List<IssuePriority>         priorities          = new ArrayList<IssuePriority>();
+	@XmlElementWrapper(name="statuses")
+	@XmlElement(name="status")
 	private List<IssueStatus>           statuses            = new ArrayList<IssueStatus>();
+	@XmlElementWrapper(name="projects")
+	@XmlElement(name="project")
 	private Map<Integer,Project>        projects            = new HashMap<Integer,Project>();
+	@XmlElementWrapper(name="trackers")
+	@XmlElement(name="tracker")
 	private List<Tracker>               trackers            = new ArrayList<Tracker>();
+	@XmlElementWrapper(name="priorities")
+	@XmlElement(name="user")
 	private Map<Integer,User>  		 users               = new HashMap<Integer, User>();
-	private Map<Project,List<Version>>  versionsByProject   = new HashMap<Project,List<Version>>();
+	@XmlElementWrapper(name="versions-by-project")
+	@XmlElement(name="version-by-project")
+	private Map<Project,ArrayList<Version>>  versionsByProject   = new HashMap<Project,ArrayList<Version>>();
+	@XmlElement(name="current-user")
 	private User						 currentUser;
 		
 	public void addProject(Project project)
@@ -75,7 +101,7 @@ public class CachedRepositoryConfiguration implements Serializable
 	
 	public void addVersionsToProject(Project p, Collection<Version> versions)
 	{
-		List<Version> versionsList = versionsByProject.get(p);
+		ArrayList<Version> versionsList = versionsByProject.get(p);
 		
 		if(versionsList==null)
 		{

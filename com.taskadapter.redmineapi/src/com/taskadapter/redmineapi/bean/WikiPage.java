@@ -9,7 +9,7 @@ public class WikiPage {
     private Date createdOn;
     private Date updatedOn;
 
-    WikiPage() {
+    public WikiPage() {
     }
 
     public String getTitle() {

@@ -14,7 +14,7 @@ public class Journal {
     /**
      * database ID.
      */
-    private final Integer id;
+    private Integer id;
 
     private String notes;
     private User user;
@@ -27,10 +27,13 @@ public class Journal {
      *
      * @param id database ID.
      */
-    Journal(Integer id) {
+    public Journal(Integer id) {
         this.id = id;
     }
 
+    public Journal() {
+        
+    }
     public Date getCreatedOn() {
         return createdOn;
     }

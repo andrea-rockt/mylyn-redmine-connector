@@ -4,18 +4,23 @@ import java.util.List;
 
 public class CustomField {
 
-    private final Integer id;
+    private Integer id;
     private String name;
     private String value;
     private boolean multiple = false;
 	private List<String> values;
 
+	public CustomField()
+	{
+		
+	}
+	
     /**
      * Use CustomFieldFactory to create instances of this class.
      *
      * @param id database ID.
      */
-    CustomField(Integer id) {
+    public CustomField(Integer id) {
         this.id = id;
     }
 

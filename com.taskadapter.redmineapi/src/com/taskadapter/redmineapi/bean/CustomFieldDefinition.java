@@ -22,12 +22,17 @@ public class CustomFieldDefinition {
     private final List<Tracker> trackers = new ArrayList<Tracker>();
     private final List<Role> roles = new ArrayList<Role>();
 
+    
+    public CustomFieldDefinition()
+    {
+    	
+    }
     /**
      * Use CustomFieldDefinitionFactory to create instances of this class.
      *
      * @param id database ID.
      */
-    CustomFieldDefinition(Integer id) {
+    public CustomFieldDefinition(Integer id) {
         this.id = id;
     }
 

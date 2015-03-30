@@ -31,7 +31,7 @@ import com.taskadapter.redmineapi.bean.Project;
 
 public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 {
-	private final IRedmineClientManager clientManager = new RedmineClientManager();
+	private final IRedmineClientManager clientManager = new RedmineClientManager(RedmineCorePlugin.getDefault().getStateLocation());
 
 	private final RedmineTaskDataHandler taskDataHandler = new RedmineTaskDataHandler(this);
 	

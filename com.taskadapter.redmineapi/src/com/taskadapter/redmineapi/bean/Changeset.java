@@ -6,6 +6,12 @@ import java.util.Date;
  * Repository Change for a Redmine issue
  */
 public class Changeset {
+	
+	public Changeset()
+	{
+		
+	}
+	
     private String revision;
     private User user;
     private String comments;

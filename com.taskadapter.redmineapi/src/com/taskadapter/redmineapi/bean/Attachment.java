@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Attachment implements Identifiable {
 
-    private final Integer id;
+    private Integer id;
     private String fileName;
     private long fileSize;
     private String contentType;
@@ -17,13 +17,19 @@ public class Attachment implements Identifiable {
     private User author;
     private String token;
 
+    
+    public Attachment()
+    {
+    	
+    }
+    
     /**
      * Use AttachmentFactory to create instances of this class.
      *
      * @param id database ID.
      * @see com.taskadapter.redmineapi.bean.AttachmentFactory
      */
-    Attachment(Integer id) {
+    public Attachment(Integer id) {
         this.id = id;
     }
 

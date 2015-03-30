@@ -20,7 +20,7 @@ public class IssueCategory implements Identifiable, Serializable {
     /**
      * @param id database ID.
      */
-    IssueCategory(Integer id) {
+    public IssueCategory(Integer id) {
         this.id = id;
     }
 
