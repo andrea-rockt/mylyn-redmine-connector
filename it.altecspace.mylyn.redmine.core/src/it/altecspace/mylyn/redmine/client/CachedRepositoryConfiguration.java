@@ -66,7 +66,7 @@ public class CachedRepositoryConfiguration implements Serializable
 	@XmlElementWrapper(name="trackers")
 	@XmlElement(name="tracker")
 	private List<Tracker>               trackers            = new ArrayList<Tracker>();
-	@XmlElementWrapper(name="priorities")
+	@XmlElementWrapper(name="users")
 	@XmlElement(name="user")
 	private Map<Integer,User>  		 users               = new HashMap<Integer, User>();
 	@XmlElementWrapper(name="versions-by-project")

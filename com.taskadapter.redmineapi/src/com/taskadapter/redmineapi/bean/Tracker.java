@@ -55,8 +55,9 @@ public class Tracker implements Identifiable, Serializable {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {

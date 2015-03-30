@@ -141,8 +141,9 @@ public class Version implements Identifiable {
         this.dueDate = dueDate;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {

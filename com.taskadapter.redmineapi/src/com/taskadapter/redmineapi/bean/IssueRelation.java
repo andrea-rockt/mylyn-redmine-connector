@@ -75,10 +75,10 @@ public class IssueRelation implements Identifiable {
         this.delay = delay;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
-
     public void setIssueId(Integer issueId) {
         this.issueId = issueId;
     }

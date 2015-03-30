@@ -63,8 +63,9 @@ public class IssueStatus implements Identifiable, Serializable {
         this.defaultStatus = defaultStatus;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {

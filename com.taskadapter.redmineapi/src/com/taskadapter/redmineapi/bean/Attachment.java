@@ -118,8 +118,9 @@ public class Attachment implements Identifiable {
         this.fileSize = fileSize;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setToken(String token) {

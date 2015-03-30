@@ -18,6 +18,11 @@ public class Group implements Identifiable {
     }
     
     @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -42,9 +47,6 @@ public class Group implements Identifiable {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Integer setId() {
-        return id;
-    }
 
     public void setName(String name) {
         this.name = name;

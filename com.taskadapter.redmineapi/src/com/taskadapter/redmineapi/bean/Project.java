@@ -186,8 +186,9 @@ public class Project implements Identifiable, Serializable {
         this.homepage = homepage;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     public void setIdentifier(String identifier) {

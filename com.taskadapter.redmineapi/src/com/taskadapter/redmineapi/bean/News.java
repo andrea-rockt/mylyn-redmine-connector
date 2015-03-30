@@ -76,10 +76,10 @@ public class News implements Identifiable, Serializable {
         this.description = aDescription;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
-
     public void setLink(String aLink) {
         this.link = aLink;
     }

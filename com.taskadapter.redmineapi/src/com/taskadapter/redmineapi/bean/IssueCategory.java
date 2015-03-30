@@ -11,7 +11,7 @@ public class IssueCategory implements Identifiable, Serializable {
     /**
      * database ID.
      */
-	private final Integer id;
+	private  Integer id;
 
     private String name;
     private Project project;
@@ -22,6 +22,11 @@ public class IssueCategory implements Identifiable, Serializable {
      */
     public IssueCategory(Integer id) {
         this.id = id;
+    }
+    
+    public IssueCategory()
+    {
+    	
     }
     
     @Override
@@ -61,8 +66,9 @@ public class IssueCategory implements Identifiable, Serializable {
         this.assignee = assignee;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {

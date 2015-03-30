@@ -131,8 +131,9 @@ public class TimeEntry implements Identifiable {
         this.hours = hours;
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setIssueId(Integer issueId) {

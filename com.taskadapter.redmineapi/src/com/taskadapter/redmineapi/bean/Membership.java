@@ -84,8 +84,9 @@ public class Membership implements Identifiable {
         this.group = group;
     }
 
-	public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setProject(Project project) {

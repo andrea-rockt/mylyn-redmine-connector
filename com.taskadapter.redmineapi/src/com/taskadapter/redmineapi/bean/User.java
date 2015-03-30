@@ -233,8 +233,9 @@ public class User implements Identifiable {
         }
     }
 
-    public Integer setId() {
-        return id;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setLastLoginOn(Date lastLoginOn) {
