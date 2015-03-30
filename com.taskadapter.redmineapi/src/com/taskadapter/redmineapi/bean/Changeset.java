@@ -7,47 +7,15 @@ import java.util.Date;
  */
 public class Changeset {
 	
-	public Changeset()
-	{
-		
-	}
+	private String revision;
 	
-    private String revision;
     private User user;
     private String comments;
     private Date committedOn;
-
-    public String getRevision() {
-        return revision;
-    }
-
-    public void setRevision(String revision) {
-        this.revision = revision;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public Date getCommittedOn() {
-        return committedOn;
-    }
-
-    public void setCommittedOn(Date committedOn) {
-        this.committedOn = committedOn;
-    }
+    public Changeset()
+	{
+		
+	}
 
     @Override
     public boolean equals(Object o) {
@@ -61,9 +29,41 @@ public class Changeset {
         return true;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public Date getCommittedOn() {
+        return committedOn;
+    }
+
+    public String getRevision() {
+        return revision;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public int hashCode() {
         return revision != null ? revision.hashCode() : 0;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setCommittedOn(Date committedOn) {
+        this.committedOn = committedOn;
+    }
+
+    public void setRevision(String revision) {
+        this.revision = revision;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

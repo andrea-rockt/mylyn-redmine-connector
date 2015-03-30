@@ -14,8 +14,7 @@ public class CustomField {
 	{
 		
 	}
-	
-    /**
+	/**
      * Use CustomFieldFactory to create instances of this class.
      *
      * @param id database ID.
@@ -23,52 +22,7 @@ public class CustomField {
     public CustomField(Integer id) {
         this.id = id;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-		return !isMultiple() || values.size() == 0 ? value : values.get(0);
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-		this.values = null;
-		this.multiple = false;
-    }
-    
-	/**
-	 * @return values list if this is a multi-line field, NULL otherwise.
-	 */
-	public List<String> getValues() {
-		return values;
-	}
-
-	/**
-	 * @param values the values for multi-line custom field.
-	 */
-	public void setValues(List<String> values) {
-		this.values = values;
-		this.value = null;
-		this.multiple = true;
-	}
-
-	/**
-	 * @return the multiple
-	 */
-	public boolean isMultiple() {
-		return multiple;
-	}
-
+	
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,10 +35,59 @@ public class CustomField {
         return true;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getValue() {
+		return !isMultiple() || values.size() == 0 ? value : values.get(0);
+    }
+
+    /**
+	 * @return values list if this is a multi-line field, NULL otherwise.
+	 */
+	public List<String> getValues() {
+		return values;
+	}
+
     @Override
     public int hashCode() {
         return id;
     }
+    
+	/**
+	 * @return the multiple
+	 */
+	public boolean isMultiple() {
+		return multiple;
+	}
+
+	public Integer setId() {
+        return id;
+    }
+
+	public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+		this.values = null;
+		this.multiple = false;
+    }
+
+    /**
+	 * @param values the values for multi-line custom field.
+	 */
+	public void setValues(List<String> values) {
+		this.values = values;
+		this.value = null;
+		this.multiple = true;
+	}
 
     @Override
     public String toString() {

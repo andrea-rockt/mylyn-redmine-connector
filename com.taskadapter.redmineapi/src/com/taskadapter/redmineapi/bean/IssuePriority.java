@@ -9,6 +9,10 @@ public class IssuePriority {
     private String name;
     private boolean isDefault;
 
+    public IssuePriority() {
+        this.id = null;
+    }
+    
     /**
      * Use IssuePriorityFactory to create instances of this class.
      *
@@ -20,30 +24,6 @@ public class IssuePriority {
         this.id = id;
     }
     
-    public IssuePriority() {
-        this.id = null;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean isDefault) {
-        this.isDefault = isDefault;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,9 +36,33 @@ public class IssuePriority {
         return true;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

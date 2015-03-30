@@ -10,40 +10,40 @@ public class WikiPageDetail extends WikiPage {
     private String comments;
     private List<Attachment> attachments;
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public List<Attachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
+    public String getComments() {
+        return comments;
     }
 
     public WikiPageDetail getParent() {
         return parent;
     }
 
-    public void setParent(WikiPageDetail parent) {
-        this.parent = parent;
-    }
-
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public User getUser() {
         return user;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setParent(WikiPageDetail parent) {
+        this.parent = parent;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void setUser(User user) {

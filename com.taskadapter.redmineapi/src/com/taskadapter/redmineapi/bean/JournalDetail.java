@@ -15,38 +15,6 @@ public class JournalDetail implements Serializable {
     private String property;
     private String oldValue;
 
-    public String getNewValue() {
-        return newValue;
-    }
-
-    public void setNewValue(String newValue) {
-        this.newValue = newValue;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property;
-    }
-
-    public String getOldValue() {
-        return oldValue;
-    }
-
-    public void setOldValue(String oldValue) {
-        this.oldValue = oldValue;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,9 +27,41 @@ public class JournalDetail implements Serializable {
         return true;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
     @Override
     public int hashCode() {
         return newValue != null ? newValue.hashCode() : 0;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
+    }
+
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
     }
 
     @Override

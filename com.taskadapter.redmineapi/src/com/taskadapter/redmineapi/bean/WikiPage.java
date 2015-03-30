@@ -12,36 +12,36 @@ public class WikiPage {
     public WikiPage() {
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Date getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
+    public String getTitle() {
+        return title;
     }
 
     public Date getUpdatedOn() {
         return updatedOn;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override

@@ -35,6 +35,12 @@ public class User implements Identifiable {
 	private final Set<Membership> memberships = new HashSet<Membership>();
 	private final Set<Group> groups = new HashSet<Group>();
 
+	
+	public User()
+    {
+    
+    }
+	
     /**
      * Use UserFactory to create instances of this class.
      *
@@ -46,83 +52,50 @@ public class User implements Identifiable {
         this.id = id;
     }
 
-    public User()
-    {
-    
-    }
-    
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return getFullName();
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     /**
-     * This field is empty when using issues.get(i).getAssignee().getMail()
+     * If there is a custom field with the same ID already present,
+     * the new field replaces the old one.
+     *
+     * @param customField the field to add.
      */
-    public String getMail() {
-        return mail;
+    public void addCustomField(CustomField customField) {
+        customFields.add(customField);
+    }
+    
+    /**
+     * NOTE: The custom field(s) <strong>must have correct database ID set</strong> to be saved to Redmine. This is Redmine REST API's limitation.
+     * ID can be seen in database or in Redmine administration when editing the custom field (number is part of the URL!).
+     */
+    public void addCustomFields(Collection<CustomField> customFields) {
+        this.customFields.addAll(customFields);
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void addGroups(Collection<Group> groups) {
+	   this.groups.addAll(groups);
+	}
+
+    public void addMemberships(Collection<Membership> memberships) {
+		this.memberships.addAll(memberships);
+	}
+
+    public void clearCustomFields() {
+        customFields.clear();
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
-    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
+        User user = (User) o;
 
-    public Date getLastLoginOn() {
-        return lastLoginOn;
-    }
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
 
-    public void setLastLoginOn(Date lastLoginOn) {
-        this.lastLoginOn = lastLoginOn;
+        return true;
     }
 
     public String getApiKey() {
         return apiKey;
-    }
-
-    /**
-     * APIKey property is read-only. This setter is only for serialization JSon.
-     * The value you set using this method will be ignored by the server.
-     */
-    @Deprecated
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
     }
 
     /**
@@ -135,56 +108,8 @@ public class User implements Identifiable {
 		return authSourceId;
 	}
 
-	public void setAuthSourceId(Integer authSource) {
-		this.authSourceId = authSource;
-	}
-
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
-    /**
-     * @return firstName + space + lastName
-     */
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
-    // TODO add junit test
-
-    /**
-     * This is a BIG HACK just to workaround the crappy Redmine REST API limitation.
-     * see http://www.redmine.org/issues/7487
-     */
-    public void setFullName(String fullName) {
-        int ind = fullName.indexOf(' ');
-        if (ind != -1) {
-            this.firstName = fullName.substring(0, ind);
-            this.lastName = fullName.substring(ind + 1);
-        } else {
-            this.firstName = fullName;
-        }
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
     /**
@@ -206,43 +131,52 @@ public class User implements Identifiable {
         return Collections.unmodifiableCollection(customFields);
     }
 
-    public void clearCustomFields() {
-        customFields.clear();
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
-     * NOTE: The custom field(s) <strong>must have correct database ID set</strong> to be saved to Redmine. This is Redmine REST API's limitation.
-     * ID can be seen in database or in Redmine administration when editing the custom field (number is part of the URL!).
+     * @return firstName + space + lastName
      */
-    public void addCustomFields(Collection<CustomField> customFields) {
-        this.customFields.addAll(customFields);
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
-    /**
-     * If there is a custom field with the same ID already present,
-     * the new field replaces the old one.
-     *
-     * @param customField the field to add.
+    public Collection<Group> getGroups() {
+	   return Collections.unmodifiableCollection(groups);
+	   }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public Date getLastLoginOn() {
+        return lastLoginOn;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+	/**
+     * This field is empty when using issues.get(i).getAssignee().getMail()
      */
-    public void addCustomField(CustomField customField) {
-        customFields.add(customField);
+    public String getMail() {
+        return mail;
     }
 
 	public Collection<Membership> getMemberships() {
 		return Collections.unmodifiableCollection(memberships);
 	}
 
-	public void addMemberships(Collection<Membership> memberships) {
-		this.memberships.addAll(memberships);
-	}
-
-	public Collection<Group> getGroups() {
-	   return Collections.unmodifiableCollection(groups);
-	   }
-
-	public void addGroups(Collection<Group> groups) {
-	   this.groups.addAll(groups);
-	}
+    public String getPassword() {
+        return password;
+    }
 
     /**
      * Returns the user status. As defined in Redmine:
@@ -257,6 +191,72 @@ public class User implements Identifiable {
         return status;
     }
 
+    // TODO add junit test
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    /**
+     * APIKey property is read-only. This setter is only for serialization JSon.
+     * The value you set using this method will be ignored by the server.
+     */
+    @Deprecated
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public void setAuthSourceId(Integer authSource) {
+		this.authSourceId = authSource;
+	}
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * This is a BIG HACK just to workaround the crappy Redmine REST API limitation.
+     * see http://www.redmine.org/issues/7487
+     */
+    public void setFullName(String fullName) {
+        int ind = fullName.indexOf(' ');
+        if (ind != -1) {
+            this.firstName = fullName.substring(0, ind);
+            this.lastName = fullName.substring(ind + 1);
+        } else {
+            this.firstName = fullName;
+        }
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setLastLoginOn(Date lastLoginOn) {
+        this.lastLoginOn = lastLoginOn;
+    }
+
+	public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+	public void setLogin(String login) {
+        this.login = login;
+    }
+
+	public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+	public void setPassword(String password) {
+        this.password = password;
+    }
+
     /**
      * Sets the user status.
      * 
@@ -264,5 +264,10 @@ public class User implements Identifiable {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
     }
 }

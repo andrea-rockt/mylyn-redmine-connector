@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.mylyn.tasks.core.ITask.PriorityLevel;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
@@ -51,6 +52,8 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 		
 		
 	}
+	
+	
 	
 	private Map<String, String> getOptionsForUser()
 	{
@@ -100,8 +103,13 @@ public class RedmineTaskAttributeMapper extends TaskAttributeMapper
 
 	private Map<String, String> getOptionsForPriority()
 	{
+		Map<String,String> options = new HashMap<String, String>();	
 		
-		return Collections.<String,String>emptyMap();
+		for(PriorityLevel level : PriorityLevel.values())
+		{
+			options.put(level.toString(), level.toString());
+		}
+		return options;
 	}
 
 	private Map<String, String> getOptionsForProject()

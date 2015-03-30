@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 public class JournalFactory {
+    public static Journal create(int id) {
+        return new Journal(id);
+    }
+
     public static Journal create(Integer id, String notes, User user, Date createdOn) {
         Journal journal = new Journal(id);
         journal.setNotes(notes);
@@ -19,9 +23,5 @@ public class JournalFactory {
         journal.setCreatedOn(createdOn);
         journal.addDetails(details);
         return journal;
-    }
-
-    public static Journal create(int id) {
-        return new Journal(id);
     }
 }

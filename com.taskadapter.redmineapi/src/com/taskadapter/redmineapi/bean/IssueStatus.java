@@ -23,34 +23,6 @@ public class IssueStatus implements Identifiable, Serializable {
         this.id = id;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isDefaultStatus() {
-        return defaultStatus;
-    }
-
-    public void setDefaultStatus(boolean defaultStatus) {
-        this.defaultStatus = defaultStatus;
-    }
-
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,10 +34,41 @@ public class IssueStatus implements Identifiable, Serializable {
 
         return true;
     }
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public boolean isDefaultStatus() {
+        return defaultStatus;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public void setDefaultStatus(boolean defaultStatus) {
+        this.defaultStatus = defaultStatus;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

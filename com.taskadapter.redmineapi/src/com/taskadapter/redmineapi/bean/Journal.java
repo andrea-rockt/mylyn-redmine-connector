@@ -19,8 +19,11 @@ public class Journal {
     private String notes;
     private User user;
     private Date createdOn;
-
     private final List<JournalDetail> details = new ArrayList<JournalDetail>();
+    
+    public Journal() {
+        
+    }
 
     /**
      * Use JournalFactory to create instances of this class.
@@ -31,45 +34,9 @@ public class Journal {
         this.id = id;
     }
 
-    public Journal() {
-        
-    }
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<JournalDetail> getDetails() {
-        return Collections.unmodifiableList(details);
-    }
-
     public void addDetails(Collection<JournalDetail> details) {
         this.details.addAll(details);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,9 +49,45 @@ public class Journal {
         return true;
     }
 
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public List<JournalDetail> getDetails() {
+        return Collections.unmodifiableList(details);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public int hashCode() {
         return id;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

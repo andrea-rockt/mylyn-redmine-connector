@@ -15,66 +15,14 @@ public class News implements Identifiable, Serializable {
     private Date createdOn;
     private String link;
 
+    public News() {
+        
+    }
+    
     public News(Integer id) {
         this.id = id;
     }
     
-    public News() {
-        
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project aProject) {
-        this.project = aProject;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User aUser) {
-        this.user = aUser;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String aTitle) {
-        this.title = aTitle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String aDescription) {
-        this.description = aDescription;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date aCreated) {
-        this.createdOn = aCreated;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String aLink) {
-        this.link = aLink;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,9 +35,65 @@ public class News implements Identifiable, Serializable {
         return true;
     }
 
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public void setCreatedOn(Date aCreated) {
+        this.createdOn = aCreated;
+    }
+
+    public void setDescription(String aDescription) {
+        this.description = aDescription;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setLink(String aLink) {
+        this.link = aLink;
+    }
+
+    public void setProject(Project aProject) {
+        this.project = aProject;
+    }
+
+    public void setTitle(String aTitle) {
+        this.title = aTitle;
+    }
+
+    public void setUser(User aUser) {
+        this.user = aUser;
     }
 
     @Override

@@ -48,31 +48,57 @@ public class Project implements Identifiable, Serializable {
      */
     private final Collection<Tracker> trackers = new HashSet<Tracker>();
 
-    public Project(Integer id) {
-        this.id = id;
-    }
-
     public Project() {
     
     }
+
+    public Project(Integer id) {
+        this.id = id;
+    }
     
+    public void addCustomFields(Collection<CustomField> customFields) {
+        this.customFields.addAll(customFields);
+    }
+
+    public void addTrackers(Collection<Tracker> trackers) {
+        this.trackers.addAll(trackers);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (id != null ? !id.equals(project.id) : project.id != null) return false;
+
+        return true;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public CustomField getCustomFieldById(int customFieldId) {
+        for (CustomField customField : customFields) {
+            if (customFieldId == customField.getId()) {
+                return customField;
+            }
+        }
+        return null;
+    }
+    
+    public Collection<CustomField> getCustomFields() {
+        return customFields;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public String getHomepage() {
         return homepage;
-    }
-
-    public void setHomepage(String homepage) {
-        this.homepage = homepage;
-    }
-
-    /**
-     * @return project's string "key" (not a numeric database id!). Example: "project_ABC"
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override
@@ -84,69 +110,17 @@ public class Project implements Identifiable, Serializable {
     }
 
     /**
+     * @return project's string "key" (not a numeric database id!). Example: "project_ABC"
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    /**
      * @return project name
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @param name the project name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return Trackers allowed in this project (e.g.: Bug, Feature, Support, Task, ...)
-     */
-    public Collection<Tracker> getTrackers() {
-        return Collections.unmodifiableCollection(trackers);
-    }
-
-    public void addTrackers(Collection<Tracker> trackers) {
-        this.trackers.addAll(trackers);
-    }
-
-    public Tracker getTrackerByName(String trackerName) {
-        if (this.trackers == null) return null;
-        for (Tracker t : this.trackers) {
-            if (t.getName().equals(trackerName)) return t;
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", identifier='" + identifier + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
     }
 
     /**
@@ -163,10 +137,6 @@ public class Project implements Identifiable, Serializable {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
     /**
      *
      * @return true if the project is public, false if the project is private. 
@@ -179,42 +149,76 @@ public class Project implements Identifiable, Serializable {
     public Boolean getProjectPublic() {
         return projectPublic;
     }
-    
-    public void setProjectPublic(Boolean projectPublic) {
-        this.projectPublic = projectPublic;
-    }
-    
-    public Collection<CustomField> getCustomFields() {
-        return customFields;
-    }
 
-    public void addCustomFields(Collection<CustomField> customFields) {
-        this.customFields.addAll(customFields);
-    }
-
-    public CustomField getCustomFieldById(int customFieldId) {
-        for (CustomField customField : customFields) {
-            if (customFieldId == customField.getId()) {
-                return customField;
-            }
+    public Tracker getTrackerByName(String trackerName) {
+        if (this.trackers == null) return null;
+        for (Tracker t : this.trackers) {
+            if (t.getName().equals(trackerName)) return t;
         }
         return null;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    /**
+     * @return Trackers allowed in this project (e.g.: Bug, Feature, Support, Task, ...)
+     */
+    public Collection<Tracker> getTrackers() {
+        return Collections.unmodifiableCollection(trackers);
+    }
 
-        Project project = (Project) o;
-
-        if (id != null ? !id.equals(project.id) : project.id != null) return false;
-
-        return true;
+    public Date getUpdatedOn() {
+        return updatedOn;
     }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+    
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+    
+    /**
+     * @param name the project name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public void setProjectPublic(Boolean projectPublic) {
+        this.projectPublic = projectPublic;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", identifier='" + identifier + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

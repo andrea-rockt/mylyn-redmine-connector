@@ -25,51 +25,15 @@ public class IssueRelation implements Identifiable {
     private String type;
     private Integer delay;
 
-    public IssueRelation(Integer id) {
-        this.id = id;
-    }
-    
     public IssueRelation()
     {
         this.id = null;
     }
-
-    public Integer getId() {
-        return id;
+    
+    public IssueRelation(Integer id) {
+        this.id = id;
     }
-
-    public Integer getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(Integer issueId) {
-        this.issueId = issueId;
-    }
-
-    public Integer getIssueToId() {
-        return issueToId;
-    }
-
-    public void setIssueToId(Integer issueToId) {
-        this.issueToId = issueToId;
-    }
-
-    public Integer getDelay() {
-        return delay;
-    }
-
-    public void setDelay(Integer delay) {
-        this.delay = delay;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,9 +46,49 @@ public class IssueRelation implements Identifiable {
         return true;
     }
 
+    public Integer getDelay() {
+        return delay;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getIssueId() {
+        return issueId;
+    }
+
+    public Integer getIssueToId() {
+        return issueToId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public void setDelay(Integer delay) {
+        this.delay = delay;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setIssueId(Integer issueId) {
+        this.issueId = issueId;
+    }
+
+    public void setIssueToId(Integer issueToId) {
+        this.issueToId = issueToId;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

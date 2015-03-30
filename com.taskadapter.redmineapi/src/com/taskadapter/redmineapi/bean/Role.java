@@ -19,6 +19,9 @@ public class Role {
 
 	private final Collection<String> permissions = new HashSet<String>();
 
+    public Role() {
+        
+    }
     /**
      * Use RoleFactory to create instances of this class.
      *
@@ -30,37 +33,9 @@ public class Role {
         this.id = id;
     }
 
-    public Role() {
-        
-    }
-    public Integer getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Boolean getInherited() {
-		return inherited;
-	}
-
-	public void setInherited(Boolean inherited) {
-		this.inherited = inherited;
-	}
-	
-	public Collection<String> getPermissions() {
-        return Collections.unmodifiableCollection(permissions);
-    }
-
     public void addPermissions(Collection<String> permissions) {
         this.permissions.addAll(permissions);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,10 +48,38 @@ public class Role {
         return true;
     }
 
-    @Override
+	public Integer getId() {
+		return id;
+	}
+
+	public Boolean getInherited() {
+		return inherited;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Collection<String> getPermissions() {
+        return Collections.unmodifiableCollection(permissions);
+    }
+	
+	@Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setInherited(Boolean inherited) {
+		this.inherited = inherited;
+	}
+
+    public void setName(String name) {
+		this.name = name;
+	}
 
     @Override
 	public String toString() {

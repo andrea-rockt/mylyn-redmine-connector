@@ -21,12 +21,11 @@ public class CustomFieldDefinition {
     private final List<String> possibleValues = new ArrayList<String>();
     private final List<Tracker> trackers = new ArrayList<Tracker>();
     private final List<Role> roles = new ArrayList<Role>();
-
-    
     public CustomFieldDefinition()
     {
     	
     }
+    
     /**
      * Use CustomFieldDefinitionFactory to create instances of this class.
      *
@@ -35,123 +34,6 @@ public class CustomFieldDefinition {
     public CustomFieldDefinition(Integer id) {
         this.id = id;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCustomizedType() {
-        return customizedType;
-    }
-
-    public void setCustomizedType(String customizedType) {
-        this.customizedType = customizedType;
-    }
-
-    public String getFieldFormat() {
-        return fieldFormat;
-    }
-
-    public void setFieldFormat(String fieldFormat) {
-        this.fieldFormat = fieldFormat;
-    }
-
-    public String getRegexp() {
-        return regexp;
-    }
-
-    public void setRegexp(String regexp) {
-        this.regexp = regexp;
-    }
-
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    public void setMinLength(Integer minLength) {
-        this.minLength = minLength;
-    }
-
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(Integer maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    public boolean isRequired() {
-        return required;
-    }
-
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
-
-    public boolean isFilter() {
-        return filter;
-    }
-
-    public void setFilter(Boolean filter) {
-        this.filter = filter;
-    }
-
-    public boolean isSearchable() {
-        return searchable;
-    }
-
-    public void setSearchable(Boolean searchable) {
-        this.searchable = searchable;
-    }
-
-    public boolean isMultiple() {
-        return multiple;
-    }
-
-    public void setMultiple(Boolean multiple) {
-        this.multiple = multiple;
-    }
-
-    public String getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
-    }
-
-    public List<String> getPossibleValues() {
-        return possibleValues;
-    }
-
-    public List<Tracker> getTrackers() {
-        return trackers;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -164,9 +46,129 @@ public class CustomFieldDefinition {
         return true;
     }
 
+    public String getCustomizedType() {
+        return customizedType;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public String getFieldFormat() {
+        return fieldFormat;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getMaxLength() {
+        return maxLength;
+    }
+
+    public Integer getMinLength() {
+        return minLength;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getPossibleValues() {
+        return possibleValues;
+    }
+
+    public String getRegexp() {
+        return regexp;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public List<Tracker> getTrackers() {
+        return trackers;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public boolean isFilter() {
+        return filter;
+    }
+
+    public boolean isMultiple() {
+        return multiple;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    public boolean isSearchable() {
+        return searchable;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setCustomizedType(String customizedType) {
+        this.customizedType = customizedType;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public void setFieldFormat(String fieldFormat) {
+        this.fieldFormat = fieldFormat;
+    }
+
+    public void setFilter(Boolean filter) {
+        this.filter = filter;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setMaxLength(Integer maxLength) {
+        this.maxLength = maxLength;
+    }
+
+    public void setMinLength(Integer minLength) {
+        this.minLength = minLength;
+    }
+
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRegexp(String regexp) {
+        this.regexp = regexp;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public void setSearchable(Boolean searchable) {
+        this.searchable = searchable;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     @Override

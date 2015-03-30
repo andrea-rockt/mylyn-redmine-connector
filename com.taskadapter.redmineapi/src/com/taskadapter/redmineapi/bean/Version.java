@@ -40,6 +40,9 @@ public class Version implements Identifiable {
     private Date updatedOn;
 
     private final Collection<CustomField> customFields = new HashSet<CustomField>();
+    public Version() {
+        
+    }
 
     /**
      * Use VersionFactory to create an instance of this class.
@@ -49,8 +52,8 @@ public class Version implements Identifiable {
         this.id = id;
     }
     
-    public Version() {
-        
+    public void addCustomFields(Collection<CustomField> customFields) {
+        this.customFields.addAll(customFields);
     }
 
     /**
@@ -68,13 +71,24 @@ public class Version implements Identifiable {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
     public Date getCreatedOn() {
         return createdOn;
+    }
+
+    /**
+     * @return the field with the given ID or NULL if the field is not found.
+     */
+    public CustomField getCustomFieldById(int customFieldId) {
+        for (CustomField customField : customFields) {
+            if (customFieldId == customField.getId()) {
+                return customField;
+            }
+        }
+        return null;
+    }
+
+    public Collection<CustomField> getCustomFields() {
+        return Collections.unmodifiableCollection(customFields);
     }
 
     public String getDescription() {
@@ -110,6 +124,11 @@ public class Version implements Identifiable {
         return updatedOn;
     }
 
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
     }
@@ -120,6 +139,10 @@ public class Version implements Identifiable {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public Integer setId() {
+        return id;
     }
 
     public void setName(String name) {
@@ -140,26 +163,6 @@ public class Version implements Identifiable {
 
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
-    }
-
-    public Collection<CustomField> getCustomFields() {
-        return Collections.unmodifiableCollection(customFields);
-    }
-
-    public void addCustomFields(Collection<CustomField> customFields) {
-        this.customFields.addAll(customFields);
-    }
-
-    /**
-     * @return the field with the given ID or NULL if the field is not found.
-     */
-    public CustomField getCustomFieldById(int customFieldId) {
-        for (CustomField customField : customFields) {
-            if (customFieldId == customField.getId()) {
-                return customField;
-            }
-        }
-        return null;
     }
 
     @Override

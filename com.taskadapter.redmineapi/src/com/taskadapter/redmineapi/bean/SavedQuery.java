@@ -7,15 +7,15 @@ public class SavedQuery {
     private boolean publicQuery;
     private Integer projectId;
 
+    public SavedQuery() {
+        
+    }
+
     /**
      * @param id database Id
      */
     public SavedQuery(Integer id) {
         this.id = id;
-    }
-
-    public SavedQuery() {
-        
     }
     @Override
     public boolean equals(Object o) {
@@ -28,12 +28,7 @@ public class SavedQuery {
 
         return true;
     }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
+    
     public Integer getId() {
         return id;
     }
@@ -42,24 +37,33 @@ public class SavedQuery {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     public boolean isPublicQuery() {
         return publicQuery;
     }
 
-    public void setPublicQuery(boolean isPublic) {
-        this.publicQuery = isPublic;
+    public Integer setId() {
+        return id;
     }
 
-    public Integer getProjectId() {
-        return projectId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setProjectId(Integer value) {
         this.projectId = value;
+    }
+
+    public void setPublicQuery(boolean isPublic) {
+        this.publicQuery = isPublic;
     }
 
     @Override

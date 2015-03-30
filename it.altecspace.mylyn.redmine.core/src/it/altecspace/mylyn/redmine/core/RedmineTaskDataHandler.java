@@ -8,6 +8,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.tasks.core.IRepositoryPerson;
+import org.eclipse.mylyn.tasks.core.ITask.PriorityLevel;
 import org.eclipse.mylyn.tasks.core.ITaskMapping;
 import org.eclipse.mylyn.tasks.core.RepositoryResponse;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
@@ -147,7 +148,10 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		mapper.setDateValue(dateUpdated, issue.getUpdatedOn());
 		mapper.setDateValue(dateDue, issue.getDueDate());
 		mapper.setValue(project, issue.getProject().getName());
-		mapper.setValue(priority, issue.getPriorityText());
+		
+		mapper.setValue(priority, translatePriorityTextToPriorityLevel(issue.getPriorityText()).toString());
+
+		
 		
 		if(issue.getTargetVersion()!=null)
 		{
@@ -155,6 +159,32 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		}
 		
 		mapper.setValue(status, issue.getStatusName());
+	}
+	
+	private PriorityLevel translatePriorityTextToPriorityLevel(String priorityText)
+	{
+		if(priorityText.equalsIgnoreCase("Low"))
+		{
+			return PriorityLevel.P5;
+		}
+		else if(priorityText.equalsIgnoreCase("Normal"))
+		{
+			return PriorityLevel.P4;
+		}
+		else if(priorityText.equalsIgnoreCase("High"))
+		{
+			return PriorityLevel.P3;
+		}		
+		else if(priorityText.equalsIgnoreCase("Urgent"))
+		{
+			return PriorityLevel.P2;
+		}
+		else if(priorityText.equalsIgnoreCase("Immediate"))
+		{
+			return PriorityLevel.P1;
+		}
+		
+		return PriorityLevel.P5;
 	}
 	
 	private IRepositoryPerson createPersonFromUser(TaskRepository repository, User user)

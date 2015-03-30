@@ -5,7 +5,9 @@ public class Group implements Identifiable {
 	
     private Integer id;
     private String name;
-
+    public Group() {
+    
+    }
     /**
      * Use GroupFactory to create instances of this class.
      *
@@ -15,30 +17,6 @@ public class Group implements Identifiable {
         this.id = id;
     }
     
-    public Group() {
-    
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,8 +29,32 @@ public class Group implements Identifiable {
         return true;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

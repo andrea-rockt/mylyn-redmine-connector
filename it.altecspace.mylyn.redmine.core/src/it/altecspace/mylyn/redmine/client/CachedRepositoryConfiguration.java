@@ -23,6 +23,29 @@ import com.taskadapter.redmineapi.bean.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CachedRepositoryConfiguration implements Serializable
 {
+	@XmlAccessorType(XmlAccessType.FIELD)
+	private static class Versions
+	{
+		@XmlElementWrapper(name="versions")
+		@XmlElement(name="version")
+		private List<Version> versions = new ArrayList<Version>();
+		
+		public Iterable<Version> get()
+		{
+			return versions;
+		}
+		
+		public void addAll(Collection<Version> versions)
+		{
+			this.versions.addAll(versions);
+		}
+			
+		public void add(Version version)
+		{
+			addAll(Arrays.asList(version));
+		}
+	}
+	
 	private static final long serialVersionUID = -3367140793853904462L;
 	
 	@XmlElementWrapper(name="custom-fields")
@@ -48,7 +71,7 @@ public class CachedRepositoryConfiguration implements Serializable
 	private Map<Integer,User>  		 users               = new HashMap<Integer, User>();
 	@XmlElementWrapper(name="versions-by-project")
 	@XmlElement(name="version-by-project")
-	private Map<Project,ArrayList<Version>>  versionsByProject   = new HashMap<Project,ArrayList<Version>>();
+	private Map<Project,Versions>  versionsByProject   = new HashMap<Project,Versions>();
 	@XmlElement(name="current-user")
 	private User						 currentUser;
 		
@@ -101,11 +124,11 @@ public class CachedRepositoryConfiguration implements Serializable
 	
 	public void addVersionsToProject(Project p, Collection<Version> versions)
 	{
-		ArrayList<Version> versionsList = versionsByProject.get(p);
+		Versions versionsList = versionsByProject.get(p);
 		
 		if(versionsList==null)
 		{
-			versionsList = new ArrayList<Version>();
+			versionsList = new Versions();
 			versionsByProject.put(p, versionsList);
 		}
 		
@@ -134,7 +157,7 @@ public class CachedRepositoryConfiguration implements Serializable
 	
 	public Iterable<Version> getProjectVersions(Project p)
 	{
-		return versionsByProject.get(p);
+		return versionsByProject.get(p).get();
 	}
 	
 	public Iterable<IssueStatus> getStatuses()

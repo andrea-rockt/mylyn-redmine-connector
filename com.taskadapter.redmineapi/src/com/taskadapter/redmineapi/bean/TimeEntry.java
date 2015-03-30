@@ -28,123 +28,16 @@ public class TimeEntry implements Identifiable {
     private Date createdOn;
     private Date updatedOn;
 
+    public TimeEntry() {
+        
+    }
+    
     /**
      * @param id database Id
      */
     public TimeEntry(Integer id) {
         this.id = id;
     }
-    public TimeEntry() {
-        
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(Integer issueId) {
-        this.issueId = issueId;
-    }
-
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
-    }
-
-    public Integer getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
-    public Float getHours() {
-        return hours;
-    }
-
-    public void setHours(Float hours) {
-        this.hours = hours;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Date getSpentOn() {
-        return spentOn;
-    }
-
-    public void setSpentOn(Date spentOn) {
-        this.spentOn = spentOn;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Override
-    public String toString() {
-        return "User \"" + userName + "\" spent " + hours
-                + " hours on task " + issueId + " (project \"" + projectName
-                + "\") doing " + activityName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,6 +50,58 @@ public class TimeEntry implements Identifiable {
         return true;
     }
 
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public Float getHours() {
+        return hours;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getIssueId() {
+        return issueId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public Date getSpentOn() {
+        return spentOn;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
@@ -164,5 +109,64 @@ public class TimeEntry implements Identifiable {
 
     public boolean isValid() {
         return (hours != null) && (projectId != null || issueId != null);
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setHours(Float hours) {
+        this.hours = hours;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setIssueId(Integer issueId) {
+        this.issueId = issueId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public void setSpentOn(Date spentOn) {
+        this.spentOn = spentOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "User \"" + userName + "\" spent " + hours
+                + " hours on task " + issueId + " (project \"" + projectName
+                + "\") doing " + activityName;
     }
 }

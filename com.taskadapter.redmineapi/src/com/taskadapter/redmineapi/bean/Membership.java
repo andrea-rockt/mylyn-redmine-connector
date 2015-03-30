@@ -25,6 +25,10 @@ public class Membership implements Identifiable {
 
 	private final Collection<Role> roles = new HashSet<Role>();
 
+    public Membership() {
+        
+    }
+
     /**
      * Use MembershipFactory to create instances of this class.
      *
@@ -35,47 +39,9 @@ public class Membership implements Identifiable {
     public Membership(Integer id) {
         this.id = id;
     }
-
-    public Membership() {
-        
-    }
-    @Override
-	public Integer getId() {
-		return id;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public Collection<Role> getRoles() {
-		return Collections.unmodifiableCollection(roles);
-	}
-
-	public void addRoles(Collection<Role> roles) {
+    public void addRoles(Collection<Role> roles) {
 		this.roles.addAll(roles);
 	}
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,10 +54,47 @@ public class Membership implements Identifiable {
         return true;
     }
 
+	public Group getGroup() {
+        return group;
+    }
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public Collection<Role> getRoles() {
+		return Collections.unmodifiableCollection(roles);
+	}
+
+    public User getUser() {
+		return user;
+	}
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+	public Integer setId() {
+        return id;
+    }
+
+    public void setProject(Project project) {
+		this.project = project;
+	}
+
+    public void setUser(User user) {
+		this.user = user;
+	}
 
     @Override
 	public String toString() {

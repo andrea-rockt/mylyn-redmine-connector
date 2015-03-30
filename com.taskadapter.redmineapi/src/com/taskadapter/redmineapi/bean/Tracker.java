@@ -14,6 +14,11 @@ public class Tracker implements Identifiable, Serializable {
 
     private String name;
 
+    
+    public Tracker() {
+        
+    }
+    
     /**
      * Use TrackerFactory to create instances of this class.
      *
@@ -25,22 +30,6 @@ public class Tracker implements Identifiable, Serializable {
         this.id = id;
     }
     
-    public Tracker() {
-        
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,8 +42,24 @@ public class Tracker implements Identifiable, Serializable {
         return true;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public Integer setId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
