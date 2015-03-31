@@ -116,6 +116,7 @@ public class RedmineJSONBuilder {
 			writeMembership(writer, object);
 		}
 	};
+	
 
     /**
 	 * Writes a "create project" request.
@@ -371,7 +372,7 @@ public class RedmineJSONBuilder {
 			writer.endArray();
 		}
 	}
-
+		
 	private static void writeCustomFields(JSONWriter writer,
 			Collection<CustomField> customFields) throws JSONException {
 		if (customFields == null || customFields.isEmpty()) {

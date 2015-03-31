@@ -92,6 +92,11 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		{
 			j.setUser(configuration.getUserById(j.getUser().getId()));
 		}
+		
+		for(Attachment a : issue.getAttachments())
+		{
+			a.setAuthor(configuration.getUserById(a.getAuthor().getId()));
+		}
 	}
 
 	private void createAttributes(TaskData taskData)
@@ -197,7 +202,7 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		{
 			TaskAttachmentMapper attachmentMapper = new TaskAttachmentMapper();
 			
-			attachmentMapper.setAuthor(repository.createPerson("attachment"));
+			attachmentMapper.setAuthor(createPersonFromUser(repository,a.getAuthor()));
 			
 			attachmentMapper.setDescription(a.getDescription());
 			
@@ -209,8 +214,7 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 			
 			attachmentMapper.setUrl(a.getContentURL());
 			
-			
-			attachmentMapper.setAttachmentId(Integer.toString(attachmentCount)); //$NON-NLS-1$
+			attachmentMapper.setAttachmentId(Integer.toString(a.getId())); //$NON-NLS-1$
 
 			TaskAttribute attribute = taskData.getRoot().createAttribute(TaskAttribute.PREFIX_ATTACHMENT + (attachmentCount));
 			
@@ -258,7 +262,7 @@ public class RedmineTaskDataHandler extends AbstractTaskDataHandler
 		}
 		else
 		{
-			person = repository.createPerson(user.getLogin().toString());
+			person = repository.createPerson(user.getMail().toString());
 			person.setName(user.getFullName());
 		}
 		 

@@ -57,6 +57,23 @@ public class AttachmentManager {
         transport.updateObject(issue);
         return attach;
     }
+    
+    /**
+    *
+    * @param issueId database ID of the Issue
+    * @param attachmentFile the file to upload
+    * @param contentType MIME type. depending on this parameter, the file will be recognized by the server as
+    *                    text or image or binary. see http://en.wikipedia.org/wiki/Internet_media_type for possible MIME types.
+    *                    sample value: ContentType.TEXT_PLAIN.getMimeType()
+    * @return the created attachment object.
+    */
+   public Attachment addAttachmentToIssue(Integer issueId, String fileName,String description, String contentType, InputStream content) throws RedmineException, IOException {
+       final Attachment attach = uploadAttachment(fileName,contentType,content);
+       final Issue issue = IssueFactory.create(issueId);
+       issue.addAttachment(attach);
+       transport.updateObject(issue);
+       return attach;
+   }
 
     /**
      * Uploads an attachment.

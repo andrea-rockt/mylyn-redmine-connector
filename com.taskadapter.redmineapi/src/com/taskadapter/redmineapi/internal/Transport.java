@@ -7,6 +7,7 @@ import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.RedmineFormatException;
 import com.taskadapter.redmineapi.RedmineInternalError;
 import com.taskadapter.redmineapi.RedmineManager;
+import com.taskadapter.redmineapi.bean.Attachment;
 import com.taskadapter.redmineapi.bean.CustomFieldDefinition;
 import com.taskadapter.redmineapi.bean.Group;
 import com.taskadapter.redmineapi.bean.Identifiable;
@@ -170,6 +171,8 @@ public final class Transport {
                 CustomFieldDefinition.class,
                 config("custom_field", "custom_fields", null,
                         RedmineJSONParser.CUSTOM_FIELD_DEFINITION_PARSER));
+        
+        OBJECT_CONFIGS.put(Attachment.class, config("attachment","attachments",null,RedmineJSONParser.ATTACHMENT_PARSER));
     }
 
 	private final URIConfigurator configurator;

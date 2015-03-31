@@ -4,6 +4,8 @@ import it.altecspace.mylyn.redmine.client.IRedmineClient;
 import it.altecspace.mylyn.redmine.client.IRedmineClientManager;
 import it.altecspace.mylyn.redmine.client.RedmineClientManager;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -37,6 +39,8 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 
 	private final RedmineTaskDataHandler taskDataHandler = new RedmineTaskDataHandler(this);
 	
+	private final RedmineTaskAttachmentHandler taskAttachmentHandler = new RedmineTaskAttachmentHandler(this);
+	
 	public IRedmineClientManager getClientManager()
 	{
 		return clientManager;
@@ -46,7 +50,7 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	@Override
 	public AbstractTaskAttachmentHandler getTaskAttachmentHandler()
 	{
-		return new RedmineTaskAttachmentHandler();
+		return taskAttachmentHandler;
 	}
 
 
@@ -87,8 +91,9 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	@Override
 	public String getRepositoryUrlFromTaskUrl(String taskUrl)
 	{
-
-		return null;
+		int index = taskUrl.indexOf('/');
+		
+		return taskUrl.substring(0,index);
 	}
 
 	@Override
@@ -116,14 +121,23 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 	public String getTaskIdFromTaskUrl(String taskUrl)
 	{
 
-		return null;
+		int index = taskUrl.lastIndexOf('/');
+		
+		return taskUrl.substring(index,taskUrl.length());
 	}
 
 	@Override
 	public String getTaskUrl(String repositoryUrl, String taskIdOrKey)
 	{
 
-		return null;
+		try
+		{
+			return (new URL(new URL(repositoryUrl),"issues/"+taskIdOrKey)).toString();
+		}
+		catch (MalformedURLException e)
+		{
+			return "";
+		}
 	}
 
 	@Override
@@ -170,12 +184,12 @@ public class RedmineRepositoryConnector extends AbstractRepositoryConnector
 				for(Issue i : client.getIssuesByProject(p))
 				{
 					
-					boolean createdByMe = i.getAuthor().getId().equals(client.getCurrentUser().getId());
+					//boolean createdByMe = i.getAuthor().getId().equals(client.getCurrentUser().getId());
 					//The && operator is short circuiting, if assignee is null the subsequent expression will not be evaluated
 					boolean assignedToMe = i.getAssignee() != null  && i.getAssignee().getId().equals(client.getCurrentUser().getId());
 					
 					
-					if(!(createdByMe||assignedToMe))
+					if(!(assignedToMe))
 					{
 						continue;
 					}

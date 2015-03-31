@@ -10,21 +10,23 @@ public enum RedmineAttribute
 	SUMMARY("Summary",
 			 TaskAttribute.SUMMARY,
 			 TaskAttribute.TYPE_SHORT_TEXT,
-			 Flag.REQUIRED),
+			 Flag.REQUIRED,Flag.READ_ONLY),
 	
 	REPORTER("Reporter",
 			  TaskAttribute.USER_REPORTER,
-			  TaskAttribute.TYPE_SINGLE_SELECT),
+			  TaskAttribute.TYPE_PERSON,
+			  Flag.READ_ONLY),
 			  
 	DESCRIPTION("Description",
 				  TaskAttribute.DESCRIPTION,
 				  TaskAttribute.TYPE_LONG_RICH_TEXT,
-				  Flag.HIDDEN,
-				  Flag.REQUIRED),
+				  Flag.REQUIRED,
+				  Flag.READ_ONLY),
 				  
 	ASSIGNED_TO("Assigned to:",
 				  TaskAttribute.USER_ASSIGNED,
-				  TaskAttribute.TYPE_SINGLE_SELECT),
+				  TaskAttribute.TYPE_PERSON,
+				  Flag.REQUIRED),
 				  
 	DATE_SUBMITTED ("Submitted",
                      TaskAttribute.DATE_CREATION,
@@ -40,28 +42,31 @@ public enum RedmineAttribute
 	DATE_DUE("Due date",
 			  TaskAttribute.DATE_DUE,
 			  TaskAttribute.TYPE_DATE,
-			  Flag.HIDDEN),
+			  Flag.READ_ONLY),
 			  
 	PROJECT("Project",
 			 TaskAttribute.PRODUCT,
 			 TaskAttribute.TYPE_SINGLE_SELECT,
-			 Flag.REQUIRED),
+			 Flag.REQUIRED,
+			 Flag.READ_ONLY),
 			 
 	PRIORITY("Priority", 
 			  TaskAttribute.PRIORITY, 
 			  TaskAttribute.TYPE_SINGLE_SELECT,
-			  Flag.HIDDEN, Flag.REQUIRED),
+			  Flag.REQUIRED,
+			  Flag.READ_ONLY),
 
 			  
 	VERSION("Target version",
 			 TaskAttribute.VERSION,
-			 TaskAttribute.TYPE_SINGLE_SELECT),		 
+			 TaskAttribute.TYPE_SINGLE_SELECT,
+			 Flag.READ_ONLY),		 
 
 	STATUS("Status",
 			TaskAttribute.STATUS,
 			TaskAttribute.TYPE_SINGLE_SELECT,
 			Flag.REQUIRED,
-			Flag.HIDDEN);
+			Flag.READ_ONLY);
 	
 	
 	public static enum Flag
